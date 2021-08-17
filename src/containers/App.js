@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import TabNavigation from '../navigation/TabNavigation'
 
 import ProductList from '../Screens/Products/ProductLists';
 
@@ -10,7 +11,7 @@ export const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator >
+      {/* <Stack.Navigator >
         <Stack.Screen
           name="productList"
           options={({route}) => ({
@@ -34,7 +35,8 @@ const App = () => {
             headerTitleAlign: 'center',
           })}
           component={ProductList}></Stack.Screen>
-      </Stack.Navigator>
+      </Stack.Navigator> */}
+      <TabNavigation/>
     </NavigationContainer>
   );
 }
