@@ -7,11 +7,16 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
+// import { connect } from 'react-redux'
+// import * as actions from '../../redux/action/cartAction';
 
 const CardItem = props => {
     const {name, image, price, countInStock, marginRight} = props;
     return (
-      <TouchableOpacity style={{...styles.card, marginRight: marginRight}}>
+      <TouchableOpacity 
+      style={{...styles.card, marginRight: marginRight}}
+      onPress={props.onPress}
+      >
         <View>
           <Image
             style={styles.image}
@@ -22,7 +27,11 @@ const CardItem = props => {
             <Text style={styles.name}>{name}</Text>
             <Text style={styles.price}>${price}</Text>
             {countInStock > 0 ? (
-              <TouchableOpacity style={styles.addButton}>
+              <TouchableOpacity 
+              onPress={()=>{
+                props.onPressAdd()
+              }}
+              style={styles.addButton}>
                 <Text>Add</Text>
               </TouchableOpacity>
             ) : (
@@ -35,6 +44,12 @@ const CardItem = props => {
       </TouchableOpacity>
     );
   };
+  // const mapDispatchToProps = (dispatch) => {
+  //   return {
+  //       addItemToCart: (product) => 
+  //           dispatch(actions.addToCart({quantity: 1, product}))
+  //   }
+// }
   const styles = StyleSheet.create({
     addButton: {
       backgroundColor: '#8fbc8f',
@@ -71,6 +86,11 @@ const CardItem = props => {
       height: Sizes.s100,
       alignSelf: 'center',
     },
-   
+
   });
+  CardItem.defaultProps= {
+    onPress: ()=>{},
+    onPressAdd :()=>{}
+  }
+  // export default connect(null, mapDispatchToProps)(CardItem);
   export default CardItem

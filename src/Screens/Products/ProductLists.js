@@ -2,14 +2,17 @@ import React, {useState} from 'react';
 import {
   View,
   FlatList,
-  Text,
   TouchableOpacity,
   Image,
   StyleSheet,
   TextInput,
-  Platform,
   Keyboard,
 } from 'react-native';
+import {
+  useFocusEffect,
+  useNavigation,
+  CompositeNavigationProp,
+} from '@react-navigation/native'
 import {Sizes} from '@dungdang/react-native-basic';
 import images from '../../res/images/index';
 import Banner from './Banner';
@@ -19,14 +22,14 @@ import CardItem from './CardItem';
 const data = require('../../data/products.json');
 const categories = require('../../data/categories.json');
 
-const ProductList = () => {
+const ProductList = (props) => {
   const [productList, setList] = useState([]);
   const [focus, setFocus] = useState(false);
   const [searchText, setText] = useState('');
   const [productsCtg, setProductsCtg] = useState([]);
   const [active, setActive] = useState('-1');
   const [initialState, setInitialState] = useState([]);
-
+const navigation = useNavigation()
   const loadData = () => {};
   const loadMore = () => {};
   return (
@@ -98,6 +101,12 @@ const ProductList = () => {
                   ? Sizes.s50
                   : null
               }
+             onPress={()=>{
+              navigation.navigate('detail')}}
+              onPressAdd={()=>{
+               props.addToCart(item)
+
+              }}
             />
           )}
         />
