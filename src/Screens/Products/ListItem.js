@@ -12,10 +12,10 @@ const ListItem = props => {
   const {name, image, price, countInStock} = props;
   return (
     <TouchableOpacity
-      style={{borderBottomWidth: 1, borderBottomColor: '#dcdcdc'}}>
-      <View style={{flexDirection: 'row', padding: Sizes.s20}}>
+      style={styles.button}>
+      <View style={styles.container}>
         <Image
-          style={{...styles.image, marginRight: Sizes.s30}}
+          style={styles.image}
           resizeMode="contain"
           source={{uri: image ? image : null}}
         />
@@ -42,7 +42,14 @@ const styles = StyleSheet.create({
     width: Sizes.s100,
     height: Sizes.s100,
     alignSelf: 'center',
+    marginRight: Sizes.s30
   },
+  button:{
+    borderBottomWidth: 1, borderBottomColor: '#dcdcdc'
+  },
+  container:{
+    flexDirection: 'row', padding: Sizes.s20
+  }
 });
 
 export default ListItem;

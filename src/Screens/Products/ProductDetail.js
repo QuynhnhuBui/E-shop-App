@@ -11,22 +11,17 @@ import {Sizes} from '@dungdang/react-native-basic';
 
 const ProductDetail = props => {
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={styles.container}>
       <ScrollView >
       <View style={{marginHorizontal: Sizes.s30}}>
         <Image
-          style={{
-            backgroundColor: 'red',
-            width: Sizes.s340,
-            height: Sizes.s340,
-            alignSelf: 'center',
-          }}
+          style={styles.image}
         />
-        <View style={{marginVertical: Sizes.s30}}>
-          <Text style={{fontSize: Sizes.s50, paddingVertical: Sizes.s10}}>
+        <View style={styles.text}>
+          <Text style={styles.name}>
             {'item.name'}
           </Text>
-          <Text style={{fontSize: Sizes.s30, paddingVertical: Sizes.s10}}>
+          <Text style={styles.brand}>
             {'item.brand'}
           </Text>
         </View>
@@ -35,31 +30,55 @@ const ProductDetail = props => {
       </View>
     </ScrollView>
     <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-           marginHorizontal: Sizes.s30,
-           backgroundColor:'yellow',
-           alignItems:'center'
-          }}>
+          style={styles.bottomContainer}>
           <Text
-            style={{
-              fontSize: Sizes.s40,
-              paddingVertical: Sizes.s20,
-              color: '#EB5757',
-              fontWeight: '700',
-            }}>
+            style={styles.price}>
             {'item.price'}
           </Text>
           <TouchableOpacity 
+          // disabled={countInStock>0 ? true : false}
           onPress={()=>{}}
-          style={{backgroundColor:'red'}}>
-            <Text style={{color:'#fff',  fontWeight:'700', padding: Sizes.s30, textAlignVertical:'center', fontSize: Sizes.s30}}>Add</Text>
+          style={styles.addButton}>
+            <Text style={styles.addButtonText}>Add</Text>
           </TouchableOpacity>
         </View>
     </View>
     
   );
 };
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container:{
+    flex: 1, backgroundColor: '#fff'
+  },
+  image:{
+    backgroundColor: 'red',
+    width: Sizes.s340,
+    height: Sizes.s340,
+    alignSelf: 'center',
+  },
+  text:{
+    marginVertical: Sizes.s30
+  },
+  name:{
+    fontSize: Sizes.s50, paddingVertical: Sizes.s10
+  },
+  brand:{
+    fontSize: Sizes.s50, paddingVertical: Sizes.s10
+  },
+  price:{
+    fontSize: Sizes.s40,
+    paddingVertical: Sizes.s20,
+    color: '#EB5757',
+    fontWeight: '700',
+  },
+  addButton:{backgroundColor:'red'},
+  addButtonText:{color:'#fff',  fontWeight:'700', padding: Sizes.s30, textAlignVertical:'center', fontSize: Sizes.s30},
+  bottomContainer:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+   marginHorizontal: Sizes.s30,
+   backgroundColor:'yellow',
+   alignItems:'center'
+  }
+});
 export default ProductDetail;

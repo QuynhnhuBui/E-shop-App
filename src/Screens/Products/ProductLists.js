@@ -35,7 +35,7 @@ const navigation = useNavigation()
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.searchView}>
           <Image
             resizeMode="contain"
             source={images.ic_search}
@@ -52,12 +52,11 @@ const navigation = useNavigation()
               setFocus(true);
             }}
             style={styles.cancelImage}
-            // value={searchText}
           />
         </View>
         {focus ? (
           <TouchableOpacity
-            style={{padding: Sizes.s20, marginRight: Sizes.s10}}
+            style={styles.clearButton}
             onPress={() => {
               setFocus(false);
               setText('');
@@ -78,7 +77,7 @@ const navigation = useNavigation()
         <CategoryFilter
           categories={categories}
           categoryFilter={() => {}}
-          //  productsCtg={productsCtg}
+         
           active={active}
           setActive={setActive}
         />
@@ -143,4 +142,10 @@ const styles = StyleSheet.create({
     paddingVertical: Sizes.s15,
     width: '80%',
   },
+  searchView:{
+    flexDirection: 'row', alignItems: 'center'
+  },
+  clearButton:{
+    padding: Sizes.s20, marginRight: Sizes.s10
+  }
 });

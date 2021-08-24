@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ShoppingCart from '../Screens/ShoppingCart/ShoppingCart'
 import { connect } from 'react-redux';
-import { addToCart} from '../redux/action/cartAction'
+import { addToCart, emptyCart} from '../redux/action/cartAction'
 class CartContainer extends React.Component {
     render() {
         return <ShoppingCart {...this.props} />;
@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch) => {
         addToCart: (product) => {
             dispatch(addToCart(product))
         },
+        emptyCart:()=>{
+            dispatch(emptyCart())
+        }
        
     };
 }

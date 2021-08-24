@@ -7,8 +7,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
-// import { connect } from 'react-redux'
-// import * as actions from '../../redux/action/cartAction';
 
 const CardItem = props => {
     const {name, image, price, countInStock, marginRight} = props;
@@ -32,7 +30,7 @@ const CardItem = props => {
                 props.onPressAdd()
               }}
               style={styles.addButton}>
-                <Text>Add</Text>
+                <Text style={{color:'#fff', fontWeight:'700'}}>Add</Text>
               </TouchableOpacity>
             ) : (
               <View>
@@ -44,15 +42,10 @@ const CardItem = props => {
       </TouchableOpacity>
     );
   };
-  // const mapDispatchToProps = (dispatch) => {
-  //   return {
-  //       addItemToCart: (product) => 
-  //           dispatch(actions.addToCart({quantity: 1, product}))
-  //   }
-// }
+  
   const styles = StyleSheet.create({
     addButton: {
-      backgroundColor: '#8fbc8f',
+      backgroundColor: '#ff6600',
       padding: Sizes.s20,
       marginHorizontal: Sizes.s100,
       alignItems: 'center',
@@ -77,7 +70,7 @@ const CardItem = props => {
       paddingVertical: Sizes.s10,
     },
     price: {
-      color: '#ffd700',
+      color: '#ff6600',
       fontWeight: '700',
       paddingVertical: Sizes.s10,
     },

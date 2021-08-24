@@ -10,15 +10,13 @@ class ProductContainer extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         addToCart: (product) => {
-            dispatch(actions.addToCart({product, quantity: 1}))
+            dispatch(actions.addToCart({...product, quantity: 1}))
         },
        
     };
 }
 const mapStateToProps = (state) => {
-    const {cartItem} = state
     return {
-        cartItem: cartItem
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductContainer);

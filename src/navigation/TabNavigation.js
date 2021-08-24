@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import ProductNavigation from './ProductNavigation'
-// import Cart from '../Screens/ShoppingCart/ShoppingCart'
 import CartNavigation from './CartNavigation'
+import CartIcon from '../Screens/ShoppingCart/CartIcon'
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
@@ -13,10 +13,10 @@ const TabNavigation = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{
+      screenOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
-        activeTintColor: "#e91e63",
+        tabBarActiveTintColor: "#ff6600",
       }}
     >
       <Tab.Screen
@@ -36,7 +36,7 @@ const TabNavigation = () => {
           tabBarIcon: ({ color }) => (
             <View>
               <Icon name="shopping-cart" color={color} size={30} />
-             
+             <CartIcon/>
             </View>
           ),
           headerShown: false
