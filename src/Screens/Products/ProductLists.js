@@ -7,12 +7,13 @@ import {
   StyleSheet,
   TextInput,
   Keyboard,
+  ScrollView,
 } from 'react-native';
 import {
   useFocusEffect,
   useNavigation,
   CompositeNavigationProp,
-} from '@react-navigation/native'
+} from '@react-navigation/native';
 import {Sizes} from '@dungdang/react-native-basic';
 import images from '../../res/images/index';
 import Banner from './Banner';
@@ -22,14 +23,14 @@ import CardItem from './CardItem';
 const data = require('../../data/products.json');
 const categories = require('../../data/categories.json');
 
-const ProductList = (props) => {
+const ProductList = props => {
   const [productList, setList] = useState([]);
   const [focus, setFocus] = useState(false);
   const [searchText, setText] = useState('');
   const [productsCtg, setProductsCtg] = useState([]);
   const [active, setActive] = useState('-1');
   const [initialState, setInitialState] = useState([]);
-const navigation = useNavigation()
+  const navigation = useNavigation();
   const loadData = () => {};
   const loadMore = () => {};
   return (
@@ -70,18 +71,21 @@ const navigation = useNavigation()
           </TouchableOpacity>
         ) : null}
       </View>
+      {!focus && (
+        <View>
+          <Banner />
 
-      <Banner />
+          <View>
+            <CategoryFilter
+              categories={categories}
+              categoryFilter={() => {}}
+              active={active}
+              setActive={setActive}
+            />
+          </View>
+        </View>
+      )}
 
-      <View>
-        <CategoryFilter
-          categories={categories}
-          categoryFilter={() => {}}
-         
-          active={active}
-          setActive={setActive}
-        />
-      </View>
       {focus ? (
         <FlatList
           data={data}
@@ -89,6 +93,7 @@ const navigation = useNavigation()
         />
       ) : (
         <FlatList
+          showsVerticalScrollIndicator={false}
           key={'grid'}
           numColumns={2}
           data={data}
@@ -100,11 +105,11 @@ const navigation = useNavigation()
                   ? Sizes.s50
                   : null
               }
-             onPress={()=>{
-              navigation.navigate('detail')}}
-              onPressAdd={()=>{
-               props.addToCart(item)
-
+              onPress={() => {
+                navigation.navigate('detail');
+              }}
+              onPressAdd={() => {
+                props.addToCart(item);
               }}
             />
           )}
@@ -142,10 +147,12 @@ const styles = StyleSheet.create({
     paddingVertical: Sizes.s15,
     width: '80%',
   },
-  searchView:{
-    flexDirection: 'row', alignItems: 'center'
+  searchView: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  clearButton:{
-    padding: Sizes.s20, marginRight: Sizes.s10
-  }
+  clearButton: {
+    padding: Sizes.s20,
+    marginRight: Sizes.s10,
+  },
 });

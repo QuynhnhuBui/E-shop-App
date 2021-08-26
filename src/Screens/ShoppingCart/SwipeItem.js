@@ -56,14 +56,18 @@ export const SwipeItem = props => {
         <TouchableOpacity
           style={styles.leftAction}
           onPress={() => {
-            setIndexScroll('');
+            props.onPress()
           }}>
-          <Text>Delete</Text>
+          <Text style={{color:'#fff', fontWeight:'700'}}>Delete</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
   );
 };
+SwipeItem.defaultProps= {
+  onPress: ()=>{},
+ 
+}
 export default SwipeItem;
 const styles = StyleSheet.create({
   leftAction: {
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: Sizes.s20,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#ff6347',
     marginBottom: Sizes.s15,
     marginTop: Sizes.s15,
     marginRight: Sizes.s30,

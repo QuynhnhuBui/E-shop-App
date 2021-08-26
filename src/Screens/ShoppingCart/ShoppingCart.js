@@ -38,6 +38,10 @@ const ShoppingCart = props => {
                 indexScroll={indexScroll}
                 setIndexScroll={value => setIndexScroll(value)}
                 {...item}
+                onPress={()=>{
+                  console.log(222)
+                  props.deleteFromCart(item)
+                }}
               />
             );
           })

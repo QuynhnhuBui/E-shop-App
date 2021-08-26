@@ -64,6 +64,7 @@ const CardItem = props => {
       shadowOffset: {width: 0, height: 0.5 * Sizes.s5},
       shadowOpacity: 0.4,
       shadowRadius: 0.8 * Sizes.s5,
+      elevation: Sizes.s7
     },
     name: {
       fontWeight: '700',

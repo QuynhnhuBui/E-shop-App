@@ -24,7 +24,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.swiper}>
         <Swiper showsButtons={false} autoplay={true} autoplayTimeout={2}>
           {bannerData.map(item => {

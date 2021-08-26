@@ -13,7 +13,7 @@ const ProductNavigation = () => {
           <Stack.Screen
             name="cart"
             options={({route}) => ({
-              title: '',
+              title: 'Cart',
               headerTitleStyle: {
                 // ...Fonts.Title,
                 fontWeight: 'bold',
