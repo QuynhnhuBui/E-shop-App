@@ -1,10 +1,9 @@
 import React from 'react'
 import { createStackNavigator } from "@react-navigation/stack"
 
-import ProductList from "../Screens/Products/ProductLists";
-import ProductDetail from '../Screens/Products/ProductDetail'
 import CartContainer from '../containers/CartContainer'
-import ProductContainer from '../containers/ProductContainer'
+import CheckoutNavigation from './CheckoutNavigation'
+
 const Stack = createStackNavigator()
 
 const ProductNavigation = () => {
@@ -29,10 +28,33 @@ const ProductNavigation = () => {
                 },
                 elevation: 0,
               },
-             
+              headerBackTitle: ' ',
               headerTitleAlign: 'center',
             })}
             component={CartContainer}></Stack.Screen>
+            <Stack.Screen
+            name="checkout"
+            options={({route}) => ({
+              title: 'Checkout',
+              headerTitleStyle: {
+                // ...Fonts.Title,
+                fontWeight: 'bold',
+                // color: Colors.DarkBlue,
+              },
+              headerStyle: {
+                backgroundColor: '#ffffff',
+                shadowColor: 'transparent',
+                shadowRadius: 0,
+                shadowOffset: {
+                  height: 0,
+                  width: 0,
+                },
+                elevation: 0,
+              },
+              headerBackTitle: ' ',
+              headerTitleAlign: 'center',
+            })}
+            component={CheckoutNavigation}></Stack.Screen>
            
         </Stack.Navigator>
     );

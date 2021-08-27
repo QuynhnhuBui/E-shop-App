@@ -10,9 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {
-  useFocusEffect,
   useNavigation,
-  CompositeNavigationProp,
 } from '@react-navigation/native';
 import {Sizes} from '@dungdang/react-native-basic';
 import images from '../../res/images/index';

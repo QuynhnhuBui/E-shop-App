@@ -29,7 +29,7 @@ const ProductNavigation = () => {
                 },
                 elevation: 0,
               },
-             
+              headerBackTitle: ' ',
               headerTitleAlign: 'center',
             })}
             component={ProductContainer}></Stack.Screen>
@@ -52,7 +52,7 @@ const ProductNavigation = () => {
                 },
                 elevation: 0,
               },
-             
+              headerBackTitle: ' ',
               headerTitleAlign: 'center',
             })}
             component={ProductDetail}></Stack.Screen>

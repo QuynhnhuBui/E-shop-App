@@ -8,10 +8,17 @@ import {
 } from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
 import SwipeItem from './SwipeItem';
+import {
+  useNavigation,
+} from '@react-navigation/native';
+
+
 const ShoppingCart = props => {
   const [cartItem, setCartItem] = useState([]);
   const [totalPrice, setTotal] = useState([]);
   const [indexScroll, setIndexScroll] = useState('');
+  const navigation = useNavigation();
+
   countTotal = listItem => {
     let total = 0;
     if (listItem) {
@@ -39,7 +46,6 @@ const ShoppingCart = props => {
                 setIndexScroll={value => setIndexScroll(value)}
                 {...item}
                 onPress={()=>{
-                  console.log(222)
                   props.deleteFromCart(item)
                 }}
               />
@@ -72,7 +78,9 @@ const ShoppingCart = props => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('checkout')
+            }}
             style={styles.checkoutButton}>
             <Text
               style={styles.checkout}>
