@@ -1,7 +1,6 @@
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {Text, TextInput, View} from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
-import Label from './Label';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -32,9 +31,7 @@ const TextField = forwardRef((props, ref) => {
   }));
   return (
     <View>
-      {/* {props.label && (
-				<Label label={props.label} isRequired={props.isRequired} />
-			)} */}
+     
       <View
         style={{
           flexDirection: 'row',
@@ -73,7 +70,6 @@ const TextField = forwardRef((props, ref) => {
           style={[
             {
               flex: 1,
-              // height: props.multiline ? Sizes.s200 : undefined,
               justifyContent: 'center',
               fontSize: Sizes.s30,
               paddingVertical: Sizes.s20,
@@ -134,7 +130,6 @@ const TextField = forwardRef((props, ref) => {
         <View>
           <Text
             style={{
-            //   fontFamily: 'Roboto-Regular',
               fontSize: Sizes.s25,
               color: 'red',
               paddingVertical: Sizes.s15,

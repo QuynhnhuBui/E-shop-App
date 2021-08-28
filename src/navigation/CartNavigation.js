@@ -14,9 +14,7 @@ const ProductNavigation = () => {
             options={({route}) => ({
               title: 'Cart',
               headerTitleStyle: {
-                // ...Fonts.Title,
                 fontWeight: 'bold',
-                // color: Colors.DarkBlue,
               },
               headerStyle: {
                 backgroundColor: '#ffffff',

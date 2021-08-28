@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { Sizes } from '@dungdang/react-native-basic'
-const Picker = forwardRef((props, ref) => {
+const Select = forwardRef((props, ref) => {
   let [showSelect, setShowSelect] = useState(false)
   let [selectedItem, setSelectedItem] = useState(
     (props.defaultValue !== undefined) ? props.defaultValue : undefined
@@ -116,12 +116,11 @@ const Picker = forwardRef((props, ref) => {
     <View style={[styles.container, props.style]}>
       <TouchableOpacity
         style={{
-          borderColor: borderColor,
-          borderWidth: 1,
+          borderColor: '#dcdcdc',
+          borderBottomWidth: Sizes.s2,
           borderRadius: Sizes.s10,
           flexDirection: 'row',
           backgroundColor:'#fff',
-          marginTop: Sizes.s20
         }}
         onPress={() => {
           props.onFocus(selectedItem)
@@ -129,9 +128,9 @@ const Picker = forwardRef((props, ref) => {
         }}
       >
         <Text style={{
-          paddingVertical: Sizes.s20,
+          paddingVertical: Sizes.s30,
           paddingRight: Sizes.s50,
-          paddingLeft: Sizes.s10,
+          paddingLeft: Sizes.s30,
           color: selectedItem === undefined ? '#8A8A8E' : '#222222',
           fontSize: props.size,
         }}>
@@ -147,18 +146,7 @@ const Picker = forwardRef((props, ref) => {
             position: 'absolute'
           }} />
       </TouchableOpacity>
-      {error !== '' && (
-        <View>
-          <Text
-            style={{
-              fontSize: Sizes.s25,
-              color: 'red',
-              paddingVertical: Sizes.s15,
-            }}>
-            {error}
-          </Text>
-        </View>
-      )}
+     
       <Modal animationType='none' transparent={true} visible={showSelect} onRequestClose={() => { setShowSelect(false) }}>
         <TouchableWithoutFeedback
           onPress={() => {
@@ -255,9 +243,9 @@ const Picker = forwardRef((props, ref) => {
 
   )
 })
-export default Picker
+export default Select
 
-Picker.defaultProps = {
+Select.defaultProps = {
   placeholder: 'Select an item',
   type: 'normal',
   size: 18,

@@ -81,7 +81,11 @@ const ShoppingCart = props => {
             onPress={() => {
               navigation.navigate('checkout')
             }}
-            style={styles.checkoutButton}>
+            // disabled={cartItem.length > 0 ? false: true}
+            style={{
+              // backgroundColor: cartItem.length > 0 ? '#ff6600': '#dcdcdc'
+              backgroundColor:  '#ff6600'
+              }}>
             <Text
               style={styles.checkout}>
               Checkout
@@ -123,7 +127,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: Sizes.s30,
   },
-  checkoutButton:{backgroundColor: '#ff6600'},
   emptyCart:{
     flex: 1, justifyContent: 'center', alignItems: 'center'
   },

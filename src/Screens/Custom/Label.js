@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   Text
 } from 'react-native'
@@ -9,7 +9,6 @@ const Label = (props) => {
     <Text
       style={{
         color: 'black',
-        // fontFamily: 'Roboto-Bold',
         paddingVertical: Sizes.s10,
         fontSize: Sizes.s30
       }}

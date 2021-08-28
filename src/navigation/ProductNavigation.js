@@ -15,9 +15,7 @@ const ProductNavigation = () => {
             options={({route}) => ({
               title: '',
               headerTitleStyle: {
-                // ...Fonts.Title,
                 fontWeight: 'bold',
-                // color: Colors.DarkBlue,
               },
               headerStyle: {
                 backgroundColor: '#ffffff',
@@ -38,9 +36,7 @@ const ProductNavigation = () => {
             options={({route}) => ({
               title: '',
               headerTitleStyle: {
-                // ...Fonts.Title,
                 fontWeight: 'bold',
-                // color: Colors.DarkBlue,
               },
               headerStyle: {
                 backgroundColor: '#ffffff',
