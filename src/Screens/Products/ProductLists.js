@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   FlatList,
@@ -7,18 +7,16 @@ import {
   StyleSheet,
   TextInput,
   Keyboard,
-  ScrollView,
 } from 'react-native';
-import {
-  useNavigation,
-} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {Sizes} from '@dungdang/react-native-basic';
 import images from '../../res/images/index';
 import Banner from './Banner';
 import CategoryFilter from './CategoryFilter';
 import ListItem from './ListItem';
 import CardItem from './CardItem';
-const data = require('../../data/products.json');
+import axios from 'axios';
+import url from '../../common/baseUrl';
 const categories = require('../../data/categories.json');
 
 const ProductList = props => {
@@ -28,9 +26,44 @@ const ProductList = props => {
   const [productsCtg, setProductsCtg] = useState([]);
   const [active, setActive] = useState('-1');
   const [initialState, setInitialState] = useState([]);
+  const [category, setCategory] = useState();
+
   const navigation = useNavigation();
   const loadData = () => {};
   const loadMore = () => {};
+  useEffect(() => {
+    getProductList();
+    getCategoryList();
+    return () => {
+      setList([]);
+    };
+  }, []);
+
+  const getProductList = () => {
+    axios
+      .get(`${url}products/getProductList`)
+      .then(res => {
+        if (res.data.success == true) {
+          setList(res.data.productList);
+        }
+      })
+      .catch(error => {
+        console.log('Fetch api error');
+      });
+  };
+
+  const getCategoryList = () => {
+    axios
+      .get(`${url}categories/getListCategory`)
+      .then(res => {
+        if (res.data.success == true) {
+          setCategory(res.data.categoryList);
+        }
+      })
+      .catch(error => {
+        console.log('Fetch api error');
+      });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
@@ -72,21 +105,23 @@ const ProductList = props => {
       {!focus && (
         <View>
           <Banner />
-
-          <View>
-            <CategoryFilter
-              categories={categories}
-              categoryFilter={() => {}}
-              active={active}
-              setActive={setActive}
-            />
-          </View>
+          {category && (
+            <View>
+              <CategoryFilter
+                categories={category}
+                categoryFilter={() => {}}
+                active={active}
+                setActive={setActive}
+              />
+            </View>
+          )}
         </View>
       )}
 
       {focus ? (
         <FlatList
-          data={data}
+          data={productList}
+          keyExtractor={item => item.id}
           renderItem={({item, index}) => <ListItem {...item} />}
         />
       ) : (
@@ -94,12 +129,13 @@ const ProductList = props => {
           showsVerticalScrollIndicator={false}
           key={'grid'}
           numColumns={2}
-          data={data}
+          data={productList}
+          keyExtractor={item => item.id}
           renderItem={({item, index}) => (
             <CardItem
               {...item}
               marginRight={
-                index === data.length - 1 && data.length % 2 != 0
+                index === productList.length - 1 && productList.length % 2 != 0
                   ? Sizes.s50
                   : null
               }
