@@ -39,6 +39,7 @@ const TextField = forwardRef((props, ref) => {
           marginTop: Sizes.s20,
         }}>
         <TextInput
+        secureTextEntry={props.secureTextEntry}
           id={props.id}
           editable={props.editable}
           value={props.value}

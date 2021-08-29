@@ -30,7 +30,7 @@ const ProductNavigation = () => {
               headerBackTitle: ' ',
               headerTitleAlign: 'center',
             })}
-            component={ProductContainer}></Stack.Screen>
+            component={ProductList}></Stack.Screen>
             <Stack.Screen
             name="detail"
             options={({route}) => ({
@@ -51,7 +51,7 @@ const ProductNavigation = () => {
               headerBackTitle: ' ',
               headerTitleAlign: 'center',
             })}
-            component={ProductDetail}></Stack.Screen>
+            component={ProductContainer}></Stack.Screen>
         </Stack.Navigator>
     );
   }

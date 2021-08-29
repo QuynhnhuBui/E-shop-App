@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   FlatList,
@@ -7,8 +7,8 @@ import {
   StyleSheet,
   TextInput,
   Keyboard,
+  ActivityIndicator,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {Sizes} from '@dungdang/react-native-basic';
 import images from '../../res/images/index';
 import Banner from './Banner';
@@ -17,7 +17,7 @@ import ListItem from './ListItem';
 import CardItem from './CardItem';
 import axios from 'axios';
 import url from '../../common/baseUrl';
-const categories = require('../../data/categories.json');
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 const ProductList = props => {
   const [productList, setList] = useState([]);
@@ -27,24 +27,23 @@ const ProductList = props => {
   const [active, setActive] = useState('-1');
   const [initialState, setInitialState] = useState([]);
   const [category, setCategory] = useState();
+  const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation();
-  const loadData = () => {};
-  const loadMore = () => {};
-  useEffect(() => {
-    getProductList();
-    getCategoryList();
-    return () => {
-      setList([]);
-    };
-  }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      getProductList();
+      getCategoryList();
+    }, []),
+  );
   const getProductList = () => {
     axios
       .get(`${url}products/getProductList`)
       .then(res => {
         if (res.data.success == true) {
           setList(res.data.productList);
+          setLoading(false);
         }
       })
       .catch(error => {
@@ -66,93 +65,106 @@ const ProductList = props => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.searchBar}>
-        <View style={styles.searchView}>
-          <Image
-            resizeMode="contain"
-            source={images.ic_search}
-            style={styles.searchImage}
-          />
-          <TextInput
-            placeholder="Search"
-            onChangeText={text => {
-              if (text) {
-                setText(text);
-              }
-            }}
-            onFocus={() => {
-              setFocus(true);
-            }}
-            style={styles.cancelImage}
-          />
+      {loading ? (
+        <View style={{justifyContent: 'center', alignItems: 'center', flex:1}}>
+          <ActivityIndicator size="large" />
         </View>
-        {focus ? (
-          <TouchableOpacity
-            style={styles.clearButton}
-            onPress={() => {
-              setFocus(false);
-              setText('');
-              Keyboard.dismiss();
-            }}>
-            <Image
-              source={images.ic_close}
-              style={{width: Sizes.s25, height: Sizes.s25}}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        ) : null}
-      </View>
-      {!focus && (
-        <View>
-          <Banner />
-          {category && (
-            <View>
-              <CategoryFilter
-                categories={category}
-                categoryFilter={() => {}}
-                active={active}
-                setActive={setActive}
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.searchBar}>
+            <View style={styles.searchView}>
+              <Image
+                resizeMode="contain"
+                source={images.ic_search}
+                style={styles.searchImage}
+              />
+              <TextInput
+                placeholder="Search"
+                onChangeText={text => {
+                  if (text) {
+                    setText(text);
+                  }
+                }}
+                onFocus={() => {
+                  setFocus(true);
+                }}
+                style={styles.cancelImage}
               />
             </View>
+            {focus ? (
+              <TouchableOpacity
+                style={styles.clearButton}
+                onPress={() => {
+                  setFocus(false);
+                  setText('');
+                  Keyboard.dismiss();
+                }}>
+                <Image
+                  source={images.ic_close}
+                  style={{width: Sizes.s25, height: Sizes.s25}}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            ) : null}
+          </View>
+          {!focus && (
+            <View>
+              <Banner />
+              {category && (
+                <View>
+                  <CategoryFilter
+                    categories={category}
+                    categoryFilter={() => {}}
+                    active={active}
+                    setActive={setActive}
+                  />
+                </View>
+              )}
+            </View>
           )}
-        </View>
-      )}
 
-      {focus ? (
-        <FlatList
-          data={productList}
-          keyExtractor={item => item.id}
-          renderItem={({item, index}) => <ListItem {...item} />}
-        />
-      ) : (
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          key={'grid'}
-          numColumns={2}
-          data={productList}
-          keyExtractor={item => item.id}
-          renderItem={({item, index}) => (
-            <CardItem
-              {...item}
-              marginRight={
-                index === productList.length - 1 && productList.length % 2 != 0
-                  ? Sizes.s50
-                  : null
-              }
+          {focus ? (
+            <FlatList
+              data={productList}
+              keyExtractor={item => item.id}
+              renderItem={({item, index}) => <ListItem 
               onPress={() => {
-                navigation.navigate('detail');
+                navigation.navigate('detail', {id: item.id});
               }}
-              onPressAdd={() => {
-                props.addToCart(item);
-              }}
+              {...item} />}
+            />
+          ) : (
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              key={'grid'}
+              numColumns={2}
+              data={productList}
+              keyExtractor={item => item.id}
+              renderItem={({item, index}) => (
+                <CardItem
+                  {...item}
+                  marginRight={
+                    index === productList.length - 1 &&
+                    productList.length % 2 != 0
+                      ? Sizes.s50
+                      : null
+                  }
+                  onPress={() => {
+                    navigation.navigate('detail', {id: item.id});
+                  }}
+                  // onPressAdd={() => {
+                  //   props.addToCart(item);
+                  // }}
+                />
+              )}
             />
           )}
-        />
-      )}
 
-      {/* <View>
+          {/* <View>
          <Text>No results found</Text>
        </View> */}
+        </View>
+      )}
     </View>
   );
 };

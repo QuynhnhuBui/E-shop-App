@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import ProductList from '../Screens/Products/ProductLists'
+import ProductDetail from '../Screens/Products/ProductDetail'
 import { connect } from 'react-redux';
 import * as actions from '../redux/action/cartAction';
 class ProductContainer extends React.Component {
     render() {
-        return <ProductList {...this.props} />;
+        return <ProductDetail {...this.props} />;
     }
 }
 const mapDispatchToProps = (dispatch) => {

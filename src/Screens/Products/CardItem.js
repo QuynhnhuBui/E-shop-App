@@ -24,7 +24,7 @@ const CardItem = props => {
           <View style={{padding: Sizes.s20, alignItems: 'center'}}>
             <Text style={styles.name}>{name}</Text>
             <Text style={styles.price}>${price}</Text>
-            {countInStock > 0 ? (
+            {/* {countInStock > 0 ? (
               <TouchableOpacity 
               onPress={()=>{
                 props.onPressAdd()
@@ -36,7 +36,7 @@ const CardItem = props => {
               <View>
                 <Text>Out of Stock</Text>
               </View>
-            )}
+            )} */}
           </View>
         </View>
       </TouchableOpacity>

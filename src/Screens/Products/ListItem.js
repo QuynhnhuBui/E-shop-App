@@ -9,9 +9,10 @@ import {
 import {Sizes} from '@dungdang/react-native-basic';
 
 const ListItem = props => {
-  const {name, image, price, countInStock} = props;
+  const {name, image, price, } = props;
   return (
     <TouchableOpacity
+    onPress={props.onPress}
       style={styles.button}>
       <View style={styles.container}>
         <Image

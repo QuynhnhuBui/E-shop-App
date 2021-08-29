@@ -8,16 +8,19 @@ import allReducers from './src/redux/reducers';
 const sagaMiddleware = createSagaMiddleware();
 let store = createStore(allReducers, applyMiddleware(sagaMiddleware));
 import App from './src/containers/App';
-
+import Auth from './src/redux/store/auth'
 class Root extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      <Provider store={store}>
+      <Auth>
+          <Provider store={store}>
         <App/>
       </Provider>
+      </Auth>
+    
     );
   }
 }
