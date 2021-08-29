@@ -19,6 +19,7 @@ import axios from 'axios';
 import url from '../../common/baseUrl';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
+
 const ProductList = props => {
   const [productList, setList] = useState([]);
   const [focus, setFocus] = useState(false);
@@ -33,13 +34,14 @@ const ProductList = props => {
 
   useFocusEffect(
     useCallback(() => {
-      getProductList();
+      getProductList('');
       getCategoryList();
     }, []),
   );
-  const getProductList = () => {
+
+  const getProductList = (id) => {
     axios
-      .get(`${url}products/getProductList`)
+      .get(`${url}products/getProductList?categories=${id}`)
       .then(res => {
         if (res.data.success == true) {
           setList(res.data.productList);
@@ -57,6 +59,20 @@ const ProductList = props => {
       .then(res => {
         if (res.data.success == true) {
           setCategory(res.data.categoryList);
+        }
+      })
+      .catch(error => {
+        console.log('Fetch api error');
+      });
+  };
+
+  const searchProduct = (text) => {
+    axios
+      .get(`${url}products/searchProduct?search=${text}`)
+      .then(res => {
+        if (res.data.success == true) {
+          setList(res.data.productList);
+          setLoading(false);
         }
       })
       .catch(error => {
@@ -81,14 +97,17 @@ const ProductList = props => {
               <TextInput
                 placeholder="Search"
                 onChangeText={text => {
+                  setText(text)
                   if (text) {
-                    setText(text);
+                    searchProduct(text)
                   }
+                 
                 }}
                 onFocus={() => {
                   setFocus(true);
                 }}
                 style={styles.cancelImage}
+                value={searchText}
               />
             </View>
             {focus ? (
@@ -98,6 +117,7 @@ const ProductList = props => {
                   setFocus(false);
                   setText('');
                   Keyboard.dismiss();
+                  getProductList('')
                 }}>
                 <Image
                   source={images.ic_close}
@@ -117,6 +137,7 @@ const ProductList = props => {
                     categoryFilter={() => {}}
                     active={active}
                     setActive={setActive}
+                    onPress={(id)=>{getProductList(id)}}
                   />
                 </View>
               )}

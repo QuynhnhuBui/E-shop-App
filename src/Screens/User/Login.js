@@ -22,7 +22,6 @@ const Login = props => {
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
   useEffect(() => {
-      console.log(222, context.stateUserData.isAuthenticated)
       if(context.stateUserData.isAuthenticated){
           navigation.navigate('profile')
       } 
@@ -51,33 +50,7 @@ const Login = props => {
 
     }
   };
-//   const loginUser = (user) => {
-//     fetch(`${url}users/login`, {
-//         method: "POST",
-//         body: JSON.stringify(user),
-//         headers: {
-//             Accept: "application/json",
-//             "Content-Type": "application/json",
-//         },
-//     })
-//     .then((res) => res.json())
-//     .then((data) => {
-//         if (data) {
-//           console.log(data)
-//             const token = data.token;
-//             AsyncStorage.setItem("token", token)
-//             // const decoded = jwt_decode(token)
-//             // dispatch(setCurrentUser(decoded, user))
-//         } 
-//     })
-//     .catch((err) => {
-//         Toast.showWithGravity(
-//             'Something went wrong. Please try again',
-//             Toast.LONG,
-//             Toast.TOP,
-//           )
-//     });
-// };
+
   return (
     <View style={styles.container}>
       <Text
