@@ -122,7 +122,6 @@ const Shipping = props => {
             id={'address2'}
             
             editable={true}
-            isRequired={true}
             onChangeText={text => {
               setAddress2(text.trim())
             }}

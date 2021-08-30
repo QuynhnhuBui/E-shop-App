@@ -115,25 +115,17 @@ const Picker = forwardRef((props, ref) => {
   return (
     <View style={[styles.container, props.style]}>
       <TouchableOpacity
-        style={{
-          borderColor: borderColor,
-          borderWidth: 1,
-          borderRadius: Sizes.s10,
-          flexDirection: 'row',
-          backgroundColor:'#fff',
-          marginTop: Sizes.s20
-        }}
+        style={{...styles.button, borderColor: borderColor}}
         onPress={() => {
           props.onFocus(selectedItem)
           setShowSelect(!showSelect)
         }}
       >
         <Text style={{
-          paddingVertical: Sizes.s20,
-          paddingRight: Sizes.s50,
-          paddingLeft: Sizes.s10,
+         
           color: selectedItem === undefined ? '#8A8A8E' : '#222222',
           fontSize: props.size,
+          ...styles.placeHolder
         }}>
           {selectedItem !== undefined ? selectedItem.name : props.placeholder}
         </Text>
@@ -141,20 +133,12 @@ const Picker = forwardRef((props, ref) => {
           color='#989898'
           size={Sizes.s30}
           name='chevron-down'
-          style={{
-            alignSelf: 'center',
-            right: 5,
-            position: 'absolute'
-          }} />
+          style={styles.icon} />
       </TouchableOpacity>
       {error !== '' && (
         <View>
           <Text
-            style={{
-              fontSize: Sizes.s25,
-              color: 'red',
-              paddingVertical: Sizes.s15,
-            }}>
+            style={styles.errorText}>
             {error}
           </Text>
         </View>
@@ -174,13 +158,7 @@ const Picker = forwardRef((props, ref) => {
           }}
         >
           <View
-            style={{
-              backgroundColor: '#00000036',
-              flex: 1,
-              width: '100%',
-              justifyContent: 'flex-end',
-              alignItem: 'center',
-            }}>
+            style={styles.modal}>
             <TouchableWithoutFeedback>
 
               <Animated.View
@@ -199,22 +177,10 @@ const Picker = forwardRef((props, ref) => {
                   height: Dimensions.get('window').height * 0.5,
                 }}>
                 <View
-                  style={{
-                    borderBottomWidth: 0.5,
-                    width: Dimensions.get('window').width,
-                    justifyContent: 'center',
-                    borderColor: '#EFEFEF',
-                    flexDirection: 'row'
-                  }}>
+                  style={styles.modalHeader}>
                   <View>
                     <Text
-                      style={{
-                        fontSize: props.size,
-                        paddingVertical: 15,
-                        alignSelf: 'center',
-                        color: '#222222',
-                        fontWeight: 'bold'
-                      }}>
+                      style={styles.modalPlaceholder}>
                       {props.placeholder}
                     </Text>
                   </View>
@@ -234,12 +200,7 @@ const Picker = forwardRef((props, ref) => {
                   data={listItem}
                   keyExtractor={(item, index) => { index.toString() }}
                   renderItem={(item, index) => renderItem(item, index)}
-                  style={{
-                    width: '100%',
-                    alignSelf: 'center',
-                    backgroundColor: '#ffffff',
-                    height: Dimensions.get('window').height * 0.5,
-                  }}
+                  style={styles.flatList}
                   contentContainerStyle={{
                     alignItems: 'center',
                   }}
@@ -273,11 +234,52 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   icon: {
-    resizeMode: 'contain',
-    height: '40%',
     alignSelf: 'center',
     right: 5,
     position: 'absolute'
+  },
+  button: {
+    borderWidth: 1,
+    borderRadius: Sizes.s10,
+    flexDirection: 'row',
+    backgroundColor:'#fff',
+    marginTop: Sizes.s20
+  },
+  placeHolder: {
+    paddingVertical: Sizes.s20,
+    paddingRight: Sizes.s50,
+    paddingLeft: Sizes.s10,
+  },
+  errorText: {
+    fontSize: Sizes.s25,
+    color: 'red',
+    paddingVertical: Sizes.s15,
+  },
+  modal: {
+    backgroundColor: '#00000036',
+    flex: 1,
+    width: '100%',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  }, 
+  flatList: {
+    width: '100%',
+    alignSelf: 'center',
+    backgroundColor: '#ffffff',
+    height: Dimensions.get('window').height * 0.5,
+  },
+  modalPlaceholder: {
+    paddingVertical: 15,
+    alignSelf: 'center',
+    color: '#222222',
+    fontWeight: 'bold'
+  },
+  modalHeader: {
+    borderBottomWidth: 0.5,
+    width: Dimensions.get('window').width,
+    justifyContent: 'center',
+    borderColor: '#EFEFEF',
+    flexDirection: 'row'
   }
 })
 

@@ -26,7 +26,6 @@ const Profile = props => {
         context.stateUserData.isAuthenticated === false ||
         context.stateUserData.isAuthenticated === null
       ) {
-        console.log(333)
         navigation.navigate('login');
       }
       if (context.stateUserData.user.userId) {
@@ -61,7 +60,6 @@ const Profile = props => {
       headers: {Authorization: `Bearer ${token}`},
     })
     .then(user => {
-      console.log(666, user.data)
       setUser(user.data);
     }).catch((e)=>{console.log(e)})
   }

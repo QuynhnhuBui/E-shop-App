@@ -1,5 +1,5 @@
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {Text, TextInput, View} from 'react-native';
+import {Text, TextInput, View, StyleSheet} from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -21,25 +21,16 @@ const TextField = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     error: (key, content) => {
       setError(content);
-     
     },
     clearError: key => {
-     
       setError('');
-     
     },
   }));
   return (
     <View>
-     
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: Sizes.s20,
-        }}>
+      <View style={styles.container}>
         <TextInput
-        secureTextEntry={props.secureTextEntry}
+          secureTextEntry={props.secureTextEntry}
           id={props.id}
           editable={props.editable}
           value={props.value}
@@ -47,20 +38,12 @@ const TextField = forwardRef((props, ref) => {
           onChangeText={text => {
             setText(text);
             props.onChangeText(text);
-            if (text.length > props.textLimit) {
-              setError(`Giới hạn ${props.textLimit} ký tự`);
-            } else {
-              setError('');
-            }
           }}
           keyboardType={props.keyboardType}
           onFocus={() => {
             setIsFocus(true);
             props.onFocus(text);
             setText(text);
-            if (text.length > props.textLimit) {
-              setError(`Giới hạn ${props.textLimit} ký tự`);
-            }
           }}
           onBlur={() => {
             setIsFocus(false);
@@ -70,19 +53,12 @@ const TextField = forwardRef((props, ref) => {
           placeholderTextColor="#989898"
           style={[
             {
-              flex: 1,
-              justifyContent: 'center',
-              fontSize: Sizes.s30,
-              paddingVertical: Sizes.s20,
-              color: '#222222',
-              paddingHorizontal: Sizes.s10,
-              borderColor: borderColor,
-              borderWidth: 1,
-              borderRadius: Sizes.s10,
+              ...styles.textInput,
               textAlignVertical: props.multiline && 'center',
               backgroundColor: props.editable ? 'white' : '#eee',
               paddingTop: props.multiline && Sizes.s15,
               lineHeight: props.multiline && Sizes.s40,
+              borderColor: borderColor,
             },
             props.style,
           ]}
@@ -95,13 +71,7 @@ const TextField = forwardRef((props, ref) => {
               top: props.icon !== undefined ? 0 : -Sizes.s25,
               right: props.icon !== undefined ? Sizes.s80 : 0,
             }}>
-            <Text
-              style={{
-                color: '#989898',
-                fontSize: Sizes.s20,
-              }}>
-              {text.length}/{props.textLimit}
-            </Text>
+           
           </View>
         )}
 
@@ -130,11 +100,7 @@ const TextField = forwardRef((props, ref) => {
       {error !== '' && (
         <View>
           <Text
-            style={{
-              fontSize: Sizes.s25,
-              color: 'red',
-              paddingVertical: Sizes.s15,
-            }}>
+            style={styles.errorText}>
             {error}
           </Text>
         </View>
@@ -149,4 +115,26 @@ TextField.defaultProps = {
   onBlur: () => {},
   editable: true,
 };
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: Sizes.s20,
+  },
+  textInput: {
+    flex: 1,
+    justifyContent: 'center',
+    fontSize: Sizes.s30,
+    paddingVertical: Sizes.s20,
+    color: '#222222',
+    paddingHorizontal: Sizes.s10,
+    borderWidth: 1,
+    borderRadius: Sizes.s10,
+  },
+  errorText: {
+    fontSize: Sizes.s25,
+    color: 'red',
+    paddingVertical: Sizes.s15,
+  }
+});
 export default TextField;
