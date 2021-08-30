@@ -103,6 +103,7 @@ export const ItemList = props => {
           style={styles.image}
           resizeMode="contain"
           source={{uri: item.image ? item.image : null}}
+          // source={{uri: 'http://nhu-eshop-server.herokuapp.com/public/images/iphone11-green.jpg-1630351810858.jpeg'}}
         />
         <View>
           <Text
@@ -198,6 +199,5 @@ const styles = StyleSheet.create({
     height: Sizes.s140,
     alignSelf: 'center',
     marginRight: Sizes.s30,
-    backgroundColor:'green'
   },
 });

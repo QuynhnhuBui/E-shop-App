@@ -37,9 +37,7 @@ const AdminNavigation = () => {
             options={({route}) => ({
               title: 'Checkout',
               headerTitleStyle: {
-                // ...Fonts.Title,
                 fontWeight: 'bold',
-                // color: Colors.DarkBlue,
               },
               headerStyle: {
                 backgroundColor: '#ffffff',

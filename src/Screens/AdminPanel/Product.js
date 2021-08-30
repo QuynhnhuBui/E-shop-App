@@ -101,7 +101,10 @@ const navigation = useNavigation()
               <Icon name="plus" color={'#fff'} size={Sizes.s30} />
               <Text style={styles.text}>Product</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.view}>
+            <TouchableOpacity 
+            onPress={()=>{navigation.navigate('category')}}
+            
+            style={styles.view}>
               <Icon name="plus" color={'#fff'} size={Sizes.s30} />
               <Text style={styles.text}>Category</Text>
             </TouchableOpacity>
