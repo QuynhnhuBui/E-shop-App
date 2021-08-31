@@ -22,7 +22,6 @@ const SwipeItem = props => {
   const [indexScroll, setIndexScroll] = useState('');
 
   const renderItem = ({item, index}) => {
-      console.log(444, index)
     return (
       <ItemList
         {...props}
@@ -38,14 +37,13 @@ const SwipeItem = props => {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={props.data}
-        // onRefresh={() => props.onRefresh()}
         refreshing={false}
         onEndReached={props.onLoadMore}
         onEndReachedThreshold={0.1}
         renderItem={renderItem}
         onScroll={() => setIndexScroll('')}
         removeClippedSubviews={true}
-       
+       onPress={(item)=>{props.onPress(item)}}
       />
     </View>
   );
@@ -81,6 +79,7 @@ export const ItemList = props => {
         <TouchableOpacity
           onPress={() => {
             setIndexScroll('');
+            props.onPress(item)
           }}
           style={{
             flex: 1,

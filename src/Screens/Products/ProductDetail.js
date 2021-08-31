@@ -62,7 +62,7 @@ const ProductDetail = props => {
             <TouchableOpacity
               disabled={product.countInStock>0 ? false : true}
               onPress={() => { 
-                props.addToCart(product)
+                props.addToCart(product.id)
                 Toast.showWithGravity(
                   'Added to cart',
                   Toast.SHORT,

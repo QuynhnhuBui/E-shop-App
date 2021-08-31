@@ -32,7 +32,7 @@ const UserNavigation = () => {
       <Stack.Screen
         name="register"
         options={({route}) => ({
-          title: 'Cart',
+          title: 'Register',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
@@ -53,7 +53,7 @@ const UserNavigation = () => {
       <Stack.Screen
         name="profile"
         options={({route}) => ({
-          title: 'Cart',
+          title: 'Profile',
           headerTitleStyle: {
             fontWeight: 'bold',
           },

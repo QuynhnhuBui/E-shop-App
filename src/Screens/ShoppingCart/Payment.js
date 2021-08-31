@@ -56,10 +56,9 @@ const Payment = props => {
       })}
       {showModal && (
         <Select
-          id={'LinhVucID'}
+          id={'paymentCard'}
           onBlur={selectedItem => {}}
           onFocus={() => {}}
-          // ref={countryRef}
           isRequired={true}
           onChooseItem={item => {setCard(item)}}
           placeholder="Select your payment card"
@@ -75,11 +74,10 @@ const Payment = props => {
             marginVertical: Sizes.s30,
             alignItems: 'center',
             borderRadius: Sizes.s35,
-            // backgroundColor: selectedMethod == undefined ? '#dcdcdc' :'#ff6600'
           }}
-          // disabled = {selectedMethod == undefined ? true : false}
+          disabled = {selectedMethod == undefined ? true : false}
           onPress={() => {
-            navigation.navigate('confirm', {order})
+            navigation.navigate('confirm', {order:order})
           }}>
           <Text style={{color: '#fff', fontWeight: '700'}}>Confirm</Text>
         </TouchableOpacity>

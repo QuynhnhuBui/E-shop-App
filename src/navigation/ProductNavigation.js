@@ -13,7 +13,7 @@ const ProductNavigation = () => {
           <Stack.Screen
             name="productList"
             options={({route}) => ({
-              title: '',
+              title: 'Product',
               headerTitleStyle: {
                 fontWeight: 'bold',
               },
@@ -34,7 +34,7 @@ const ProductNavigation = () => {
             <Stack.Screen
             name="detail"
             options={({route}) => ({
-              title: '',
+              title: 'Detail',
               headerTitleStyle: {
                 fontWeight: 'bold',
               },

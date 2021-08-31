@@ -26,7 +26,7 @@ const Profile = props => {
         context.stateUserData.isAuthenticated === false ||
         context.stateUserData.isAuthenticated === null
       ) {
-        navigation.navigate('login');
+        navigation.replace('login');
       }
       if (context.stateUserData.user.userId) {
         
@@ -34,22 +34,7 @@ const Profile = props => {
       }
       
 
-      // axios
-      // .get(`${baseURL}orders`)
-      // .then((x) => {
-      //     const data = x.data;
-      //     console.log(data)
-      //     const userOrders = data.filter(
-      //         (order) => order.user._id === context.stateUser.user.sub
-      //     );
-      //     setOrders(userOrders);
-      // })
-      // .catch((error) => console.log(error))
-
-      // return () => {
-      //     setUserProfile();
-      //     setOrders();
-      // }
+     
     }, [context.stateUserData.isAuthenticated]),
   );
 

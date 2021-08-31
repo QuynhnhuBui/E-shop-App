@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,20 +8,62 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
-import {
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+import url from '../../common/baseUrl';
+import Toast from 'react-native-simple-toast';
+
 const Confirm = props => {
   const confirm = props.route.params;
-  const [order, setOrder] = useState();
+  const [order, setOrder] = useState([]);
   const navigation = useNavigation();
+  const [confirmOrder, setConfirm] = useState();
+  useEffect(() => {
+    if (confirm) {
+      setConfirm(confirm.order.order.orderItems);
+      if (confirmOrder !== undefined) {
+        confirmOrder.forEach(item => {
+          getProduct(item.product);
+        });
+      }
+    }
+  }, [confirm]);
+  const getProduct = id => {
+    let productList = [];
+    axios
+      .get(`${url}products/getProduct/${id}`)
+      .then(res => {
+        if (res.data.success == true) {
+          productList.push(res.data.product);
+          setOrder(productList);
+          console.log(productList);
+        }
+      })
+      .catch(error => {
+        console.log('Fetch api error');
+      });
+  };
 
-  useFocusEffect(
-    useCallback(() => {
-      setOrder(props.cartItem);
-    }, [props.cartItem]),
-  );
+  const onPress = () => {
+    console.log(999);
+    axios
+      .post(`${url}orders/createOrder`, confirm.order.order)
+      .then(res => {
+        if (res.data.success == true) {
+          navigation.navigate('cart');
+          props.emptyCart();
+          Toast.showWithGravity(
+            'Order successfully',
+            Toast.LONG,
+            Toast.TOP,
+          )
+        }
+      })
+      .catch(error => {
+        console.log('Fetch api error');
+      });
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -42,7 +84,7 @@ const Confirm = props => {
                 <Text>Country: {confirm.order.order.country}</Text>
               </View>
               <Text style={styles.title}>Items:</Text>
-              {order &&
+              {order !== undefined &&
                 order.map(item => {
                   return (
                     <View style={styles.button}>
@@ -67,8 +109,7 @@ const Confirm = props => {
       <TouchableOpacity
         style={styles.orderButton}
         onPress={() => {
-          navigation.navigate('cart');
-          props.emptyCart();
+          onPress();
         }}>
         <Text style={{color: '#fff', fontWeight: '700'}}>Place order</Text>
       </TouchableOpacity>

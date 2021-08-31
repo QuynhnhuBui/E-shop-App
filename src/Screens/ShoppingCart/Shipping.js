@@ -18,11 +18,11 @@ import countries from '../../data/countries.json';
 import {useNavigation} from '@react-navigation/native';
 
 const Shipping = props => {
-  const [phone, setPhone] = useState('');
-  const [address1, setAddress1] = useState('');
+  const [phone, setPhone] = useState('0466593094');
+  const [address1, setAddress1] = useState('Hatuntekjankuja');
   const [address2, setAddress2] = useState('');
-  const [city, setCity] = useState('');
-  const [zip, setZip] = useState('');
+  const [city, setCity] = useState('Helsinki');
+  const [zip, setZip] = useState('00750');
   const [country, setCountry] = useState('');
   const [orderItems, setOrder] = useState();
   const phoneNumber = useRef();
@@ -36,40 +36,33 @@ const Shipping = props => {
     setOrder(props.cartItem);
   }, []);
   const checkOut = () => {
-    let order = {
-          city,
-          zip,
-          shippingAddress1: address1,
-          shippingAddress2: address2,
-          country,
-          phone,
-        };
-    navigation.navigate('payment', {order: order});
+   
 
-    // if(city == "" || zip =="" || shippingAddress1 == "" || country == "" || phone ==""){
-    //   Alert.alert(
-    //     "Alert",
-    //     "Please fill in your shipping information",
-    //     [
-    //       {
-    //         text: "Cancel",
-    //         // onPress: () => Alert.alert("Cancel Pressed"),
-    //         // style: "cancel",
-    //       },
-    //     ],
+    if(city == "" || zip =="" || address1 == "" || country == "" || phone ==""){
+      console.log(country)
+      Alert.alert(
+        "Alert",
+        "Please fill in your shipping information",
+        [
+          {
+            text: "Cancel",
+          
+          },
+        ],
         
-    //   );
-    // } else{
-    //   let order = {
-    //     city,
-    //     zip,
-    //     shippingAddress1: address1,
-    //     shippingAddress2: address2,
-    //     country,
-    //     phone,
-    //   };
-    //   navigation.navigate('payment', {order: order});
-    // }
+      );
+    } else{
+      let order = {
+        city,
+        zip,
+        shippingAddress1: address1,
+        shippingAddress2: address2,
+        country,
+        phone,
+        orderItems: orderItems
+      };
+      navigation.navigate('payment', {order: order});
+    }
     
   };
   return (
@@ -181,7 +174,7 @@ const Shipping = props => {
             ref={countryRef}
             isRequired={true}
             onChooseItem={item => {
-              setCity(item.name)
+              setCountry(item.name)
             }}
             placeholder="Select your country"
             size={Sizes.s30}

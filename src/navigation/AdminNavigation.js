@@ -6,6 +6,7 @@ import CheckoutNavigation from './CheckoutNavigation'
  import Product from '../Screens/AdminPanel/Product'
 import Categories from '../Screens/AdminPanel/Categories'
 import AddProduct from '../Screens/AdminPanel/AddProduct'
+import Orders from '../Screens/AdminPanel/Orders'
 const Stack = createStackNavigator()
 
 const AdminNavigation = () => {
@@ -14,7 +15,7 @@ const AdminNavigation = () => {
           <Stack.Screen
             name="product"
             options={({route}) => ({
-              title: 'Cart',
+              title: 'Product List',
               headerTitleStyle: {
                 fontWeight: 'bold',
               },
@@ -35,7 +36,7 @@ const AdminNavigation = () => {
             <Stack.Screen
             name="category"
             options={({route}) => ({
-              title: 'Checkout',
+              title: 'Category',
               headerTitleStyle: {
                 fontWeight: 'bold',
               },
@@ -76,6 +77,27 @@ const AdminNavigation = () => {
               headerTitleAlign: 'center',
             })}
             component={AddProduct}></Stack.Screen>
+             <Stack.Screen
+            name="orders"
+            options={({route}) => ({
+              title: 'Orders',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerStyle: {
+                backgroundColor: '#ffffff',
+                shadowColor: 'transparent',
+                shadowRadius: 0,
+                shadowOffset: {
+                  height: 0,
+                  width: 0,
+                },
+                elevation: 0,
+              },
+              headerBackTitle: ' ',
+              headerTitleAlign: 'center',
+            })}
+            component={Orders}></Stack.Screen>
            
         </Stack.Navigator>
     );

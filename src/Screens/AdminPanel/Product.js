@@ -91,12 +91,14 @@ const navigation = useNavigation()
       ) : (
         <View style={styles.container}>
           <View style={styles.topContainer}>
-            <TouchableOpacity style={styles.view}>
+            <TouchableOpacity 
+            onPress={()=>{navigation.navigate('orders')}}
+            style={styles.view}>
               <Icon name="shopping-bag" color={'#fff'} size={Sizes.s30} />
               <Text style={styles.text}>Orders</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={()=>{navigation.navigate('addProduct')}}
+            onPress={()=>{navigation.navigate('addProduct',{item: null})}}
             style={styles.view}>
               <Icon name="plus" color={'#fff'} size={Sizes.s30} />
               <Text style={styles.text}>Product</Text>
@@ -154,8 +156,11 @@ const navigation = useNavigation()
             onSetIndexScroll={value => setIndexScroll(value)}
             indexScroll={indexScroll}
             onPressDel={id => {
-              console.log(555, id);
+              
               deleteProduct(id);
+            }}
+            onPress={(item)=>{
+              navigation.navigate('addProduct',{item})
             }}
           />
         </View>
