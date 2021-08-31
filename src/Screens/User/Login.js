@@ -23,7 +23,7 @@ const Login = props => {
   const navigation = useNavigation();
   useEffect(() => {
       if(context.stateUserData.isAuthenticated){
-          navigation.navigate('profile')
+          navigation.replace('profile')
       } 
   }
   , [context.stateUserData.isAuthenticated]);
@@ -37,8 +37,7 @@ const Login = props => {
                 [
                   {
                     text: "Cancel",
-                    // onPress: () => Alert.alert("Cancel Pressed"),
-                    // style: "cancel",
+                   
                   },
                 ],)
     } else {
