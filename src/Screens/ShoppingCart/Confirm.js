@@ -21,27 +21,29 @@ const Confirm = props => {
   useEffect(() => {
     if (confirm) {
       setConfirm(confirm.order.order.orderItems);
-      if (confirmOrder !== undefined) {
-        confirmOrder.forEach(item => {
-          getProduct(item.product);
-        });
-      }
+      getProduct(confirm);
     }
-  }, [confirm]);
-  const getProduct = id => {
+  }, [props]);
+  const getProduct = list => {
+    const order = list.order.order;
     let productList = [];
-    axios
-      .get(`${url}products/getProduct/${id}`)
-      .then(res => {
-        if (res.data.success == true) {
-          productList.push(res.data.product);
-          setOrder(productList);
-          console.log(productList);
-        }
-      })
-      .catch(error => {
-        console.log('Fetch api error');
+
+    if (order) {
+      order.orderItems.forEach(item => {
+        axios
+          .get(`${url}products/getProduct/${item.product}`)
+          .then(res => {
+            if (res.data.success == true) {
+              productList.push(res.data.product);
+              setOrder(productList);
+              console.log(productList);
+            }
+          })
+          .catch(error => {
+            console.log('Fetch api error');
+          });
       });
+    }
   };
 
   const onPress = () => {
@@ -52,11 +54,7 @@ const Confirm = props => {
         if (res.data.success == true) {
           navigation.navigate('cart');
           props.emptyCart();
-          Toast.showWithGravity(
-            'Order successfully',
-            Toast.LONG,
-            Toast.TOP,
-          )
+          Toast.showWithGravity('Order successfully', Toast.LONG, Toast.TOP);
         }
       })
       .catch(error => {

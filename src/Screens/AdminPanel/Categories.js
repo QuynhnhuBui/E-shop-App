@@ -77,22 +77,7 @@ const Categories = props => {
    
   }
 
-  const deleteCategory = (id) =>{
-    axios
-    .delete(`${url}categories/deleteCategory/${id}`,{
-      headers:{
-        Authorization:  `Bearer ${token}`
-      }
-    })
-    .then(res => {
-      if (res.data.success == true) {
-        getCategoryList()
-      }
-    })
-    .catch(error => {
-      console.log('Fetch api error');
-    });
-  }
+  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -107,20 +92,7 @@ const Categories = props => {
                   <View style={styles.container}>
                     <Text>{category.name}</Text>
 
-                    <TouchableOpacity s
-                    onPress={()=>{
-                      deleteCategory(category.id)
-                    }}
-                    style={styles.deleteButton}>
-                      <Text
-                        style={{
-                          color: '#fff',
-                          fontWeight: '700',
-                          padding: Sizes.s20,
-                        }}>
-                        Delete
-                      </Text>
-                    </TouchableOpacity>
+                    
                   </View>
                 </View>
               );
