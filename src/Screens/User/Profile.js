@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import url from '../../common/baseUrl';
 import AuthGlobal from '../../redux/store/authGlobal';
 import axios from 'axios';
-import {logoutUser} from '../../redux/action/loginActions'
+import {logoutUser} from '../../redux/action/loginActions';
 
 const Profile = props => {
   const context = useContext(AuthGlobal);
@@ -20,63 +20,59 @@ const Profile = props => {
   const [user, setUser] = useState({});
   useFocusEffect(
     useCallback(() => {
-     
       if (
-       
         context.stateUserData.isAuthenticated === false ||
         context.stateUserData.isAuthenticated === null
       ) {
         navigation.replace('login');
       }
       if (context.stateUserData.user.userId) {
-        
-        getProfile(context.stateUserData.user.userId)
+        getProfile(context.stateUserData.user.userId);
       }
-      
-
-     
     }, [context.stateUserData.isAuthenticated]),
   );
 
-  const getProfile = async (id)=>{
-    const token = await AsyncStorage.getItem('token')
+  const getProfile = async id => {
+    const token = await AsyncStorage.getItem('token');
     axios
-    .get(`${url}users/getProfile/${id}`, {
-      headers: {Authorization: `Bearer ${token}`},
-    })
-    .then(user => {
-      setUser(user.data);
-    }).catch((e)=>{console.log(e)})
-  }
+      .get(`${url}users/getProfile/${id}`, {
+        headers: {Authorization: `Bearer ${token}`},
+      })
+      .then(user => {
+        setUser(user.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
   return (
     <View style={styles.container}>
       {/* {user && ( */}
-        <View>
-          <View
-            style={styles.textView}>
-            <Text style={styles.text}>Name</Text>
-            <Text style={styles.text}>{user.name}</Text>
-          </View>
-          <View
-            style={styles.textView}>
-            <Text style={styles.text}>Phone</Text>
-            <Text style={styles.text}>{user.phone}</Text>
-          </View>
-
-          <View
-            style={styles.textView}>
-            <Text style={styles.text}>Email</Text>
-            <Text style={styles.text}>{user.email}</Text>
-          </View>
+      <View>
+        <View style={styles.textView}>
+          <Text style={styles.text}>Name</Text>
+          <Text style={styles.text}>{user.name}</Text>
         </View>
+        <View style={styles.textView}>
+          <Text style={styles.text}>Phone</Text>
+          <Text style={styles.text}>{user.phone}</Text>
+        </View>
+
+        <View style={styles.textView}>
+          <Text style={styles.text}>Email</Text>
+          <Text style={styles.text}>{user.email}</Text>
+        </View>
+      </View>
       {/* )} */}
-       <TouchableOpacity style={styles.button} onPress={() => {
-         console.log(555, context)
-         logoutUser(context.dispatch)
-         AsyncStorage.removeItem('token')
-       }}>
-          <Text style={{color: '#fff', fontWeight: '700'}}>Sign out</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          console.log(555, context);
+          logoutUser(context.dispatch);
+          AsyncStorage.removeItem('token');
+        }}>
+        <Text style={{color: '#fff', fontWeight: '700'}}>Sign out</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -86,15 +82,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flex: 1,
   },
-  textView:{
+  textView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: Sizes.s40,
     borderBottomWidth: Sizes.s2,
     borderBottomColor: '#dcdcdc',
-    paddingVertical: Sizes.s30
+    paddingVertical: Sizes.s30,
   },
-  text:{fontWeight:'600',fontSize: Sizes.s30},
+  text: {fontWeight: '600', fontSize: Sizes.s30},
   button: {
     backgroundColor: '#ff6600',
     padding: Sizes.s20,

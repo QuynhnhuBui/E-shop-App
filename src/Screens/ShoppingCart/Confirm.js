@@ -6,6 +6,8 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  ViewBase,
+  FlatList,
 } from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
@@ -35,8 +37,8 @@ const Confirm = props => {
           .then(res => {
             if (res.data.success == true) {
               productList.push(res.data.product);
+
               setOrder(productList);
-              console.log(productList);
             }
           })
           .catch(error => {
@@ -47,7 +49,6 @@ const Confirm = props => {
   };
 
   const onPress = () => {
-    console.log(999);
     axios
       .post(`${url}orders/createOrder`, confirm.order.order)
       .then(res => {
@@ -63,7 +64,7 @@ const Confirm = props => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View>
         <Text style={styles.confirmText}>Confirm order</Text>
         <View style={{borderWidth: Sizes.s2, marginHorizontal: Sizes.s50}}>
@@ -82,24 +83,26 @@ const Confirm = props => {
                 <Text>Country: {confirm.order.order.country}</Text>
               </View>
               <Text style={styles.title}>Items:</Text>
-              {order !== undefined &&
-                order.map(item => {
-                  return (
-                    <View style={styles.button}>
-                      <View style={styles.listItem}>
-                        <View style={{flexDirection: 'row'}}>
-                          <Image
-                            style={styles.image}
-                            resizeMode="contain"
-                            source={{uri: item.image ? item.image : null}}
-                          />
-                          <Text style={styles.name}>{item.name}</Text>
-                        </View>
-                        <Text style={styles.price}>${item.price}</Text>
+
+              <FlatList
+                data={order}
+                keyExtractor={item => item.id}
+                renderItem={({item, index}) => (
+                  <View style={styles.button}>
+                    <View style={styles.listItem}>
+                      <View style={{flexDirection: 'row'}}>
+                        <Image
+                          style={styles.image}
+                          resizeMode="contain"
+                          source={{uri: item.image ? item.image : null}}
+                        />
+                        <Text style={styles.name}>{item.name}</Text>
                       </View>
+                      <Text style={styles.price}>${item.price}</Text>
                     </View>
-                  );
-                })}
+                  </View>
+                )}
+              />
             </View>
           )}
         </View>
@@ -111,7 +114,7 @@ const Confirm = props => {
         }}>
         <Text style={{color: '#fff', fontWeight: '700'}}>Place order</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -140,7 +143,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
+    // backgroundColor: 'red',
   },
   confirmText: {
     alignSelf: 'center',

@@ -3,7 +3,7 @@ import {StyleSheet, TouchableOpacity, ScrollView, Text} from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
 
 const CategoryFilter = props => {
-    const { setActive, active, categories} = props
+  const {setActive, active, categories} = props;
 
   return (
     <ScrollView
@@ -13,22 +13,18 @@ const CategoryFilter = props => {
       <TouchableOpacity
         key={1}
         onPress={() => {
-         props.onPress('')
-         setActive(-1);
+          props.onPress('');
+          setActive(-1);
         }}
-        style={[
-          styles.center,
-          active == -1 ? styles.active : styles.inactive,
-        ]}>
+        style={[styles.center, active == -1 ? styles.active : styles.inactive]}>
         <Text style={styles.text}>All</Text>
       </TouchableOpacity>
       {categories.map(item => (
         <TouchableOpacity
           key={item.id}
           onPress={() => {
-            // categoryFilter(item._id),
-            props.onPress(item.id)
-              setActive(categories.indexOf(item));
+            props.onPress(item.id);
+            setActive(categories.indexOf(item));
           }}
           style={[
             styles.center,
@@ -43,9 +39,9 @@ const CategoryFilter = props => {
     </ScrollView>
   );
 };
-CategoryFilter.defaultProps= {
-  onPress: ()=>{},
-}
+CategoryFilter.defaultProps = {
+  onPress: () => {},
+};
 const styles = StyleSheet.create({
   center: {
     justifyContent: 'center',

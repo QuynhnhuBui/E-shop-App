@@ -12,7 +12,7 @@ import {Sizes} from '@dungdang/react-native-basic';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import url from '../../common/baseUrl';
-import Toast from 'react-native-simple-toast'
+import Toast from 'react-native-simple-toast';
 
 const ProductDetail = props => {
   const [loading, setLoading] = useState(true);
@@ -46,10 +46,10 @@ const ProductDetail = props => {
         <View style={styles.container}>
           <ScrollView>
             <View style={{marginHorizontal: Sizes.s30}}>
-              <Image 
-              source={{uri: product.image ? product.image : null}}
-              style={styles.image} 
-              resizeMode='contain'
+              <Image
+                source={{uri: product.image ? product.image : null}}
+                style={styles.image}
+                resizeMode="contain"
               />
               <View style={styles.text}>
                 <Text style={styles.name}>{product.name}</Text>
@@ -60,14 +60,10 @@ const ProductDetail = props => {
           <View style={styles.bottomContainer}>
             <Text style={styles.price}>${product.price}</Text>
             <TouchableOpacity
-              disabled={product.countInStock>0 ? false : true}
-              onPress={() => { 
-                props.addToCart(product.id)
-                Toast.showWithGravity(
-                  'Added to cart',
-                  Toast.SHORT,
-                  Toast.TOP,
-                )
+              disabled={product.countInStock > 0 ? false : true}
+              onPress={() => {
+                props.addToCart(product.id);
+                Toast.showWithGravity('Added to cart', Toast.SHORT, Toast.TOP);
               }}
               style={styles.addButton}>
               <Text style={styles.addButtonText}>Add</Text>
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
     paddingVertical: Sizes.s10,
   },
   brand: {
-    fontSize: Sizes.s50,
+    fontSize: Sizes.s40,
     paddingVertical: Sizes.s10,
   },
   price: {

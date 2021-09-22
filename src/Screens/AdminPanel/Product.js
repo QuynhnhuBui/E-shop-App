@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
-  FlatList,
   TouchableOpacity,
   Image,
   StyleSheet,
@@ -26,7 +25,7 @@ const Product = props => {
   const [focus, setFocus] = useState(false);
   const [searchText, setText] = useState('');
   const [indexScroll, setIndexScroll] = useState(0);
-const navigation = useNavigation()
+  const navigation = useNavigation();
 
   useFocusEffect(
     useCallback(() => {
@@ -91,22 +90,27 @@ const navigation = useNavigation()
       ) : (
         <View style={styles.container}>
           <View style={styles.topContainer}>
-            <TouchableOpacity 
-            onPress={()=>{navigation.navigate('orders')}}
-            style={styles.view}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('orders');
+              }}
+              style={styles.view}>
               <Icon name="shopping-bag" color={'#fff'} size={Sizes.s30} />
               <Text style={styles.text}>Orders</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-            onPress={()=>{navigation.navigate('addProduct',{item: null})}}
-            style={styles.view}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('addProduct', {item: null});
+              }}
+              style={styles.view}>
               <Icon name="plus" color={'#fff'} size={Sizes.s30} />
               <Text style={styles.text}>Product</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-            onPress={()=>{navigation.navigate('category')}}
-            
-            style={styles.view}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('category');
+              }}
+              style={styles.view}>
               <Icon name="plus" color={'#fff'} size={Sizes.s30} />
               <Text style={styles.text}>Category</Text>
             </TouchableOpacity>
@@ -156,11 +160,10 @@ const navigation = useNavigation()
             onSetIndexScroll={value => setIndexScroll(value)}
             indexScroll={indexScroll}
             onPressDel={id => {
-              
               deleteProduct(id);
             }}
-            onPress={(item)=>{
-              navigation.navigate('addProduct',{item})
+            onPress={item => {
+              navigation.navigate('addProduct', {item});
             }}
           />
         </View>

@@ -49,7 +49,6 @@ const AddProduct = props => {
     AsyncStorage.getItem('token').then(res => setToken(res));
     getCategoryList();
     if (item) {
-
       setName(item.name);
       setBrand(item.brand);
       setCategory(item.category.id);
@@ -57,7 +56,7 @@ const AddProduct = props => {
       setDescription(item.description);
       setCount(item.countInStock.toString());
       setPrice(item.price.toString());
-      setId(item.id)
+      setId(item.id);
     }
   }, []);
 
@@ -78,13 +77,12 @@ const AddProduct = props => {
     const options = {};
     launchImageLibrary(options, res => {
       if (res.assets) {
-        console.log(res.assets);
         setImage(res.assets[0].uri);
         setRes(res.assets[0]);
       }
     });
   };
-  const onPress =  () => {
+  const onPress = () => {
     if (
       name == ' ' ||
       brand == '' ||
@@ -112,7 +110,7 @@ const AddProduct = props => {
       body.append('description', description);
       body.append('countInStock', count);
       body.append('brand', brand);
-      if(imageRes){
+      if (imageRes) {
         body.append('image', {
           name: imageRes.fileName,
           type: imageRes.type,
@@ -121,7 +119,7 @@ const AddProduct = props => {
               ? imageRes.uri
               : imageRes.uri.replace('file://', ''),
         });
-     }
+      }
       body.append('category', category);
 
       if (item !== null) {
@@ -136,7 +134,6 @@ const AddProduct = props => {
           .then(response => response.json())
           .then(response => {
             if (response.success == true) {
-
               Toast.showWithGravity(
                 'Update product successfully',
                 Toast.LONG,

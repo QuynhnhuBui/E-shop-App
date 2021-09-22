@@ -29,28 +29,28 @@ const ShoppingCart = props => {
   };
   useEffect(() => {
     if (props.cartItem && props.cartItem.length > 0) {
-      props.cartItem.forEach(item => {
-        getProduct(item.product);
-      });
+      getProduct();
     } else {
       setCartItem([]);
     }
   }, [props.cartItem]);
 
-  const getProduct = id => {
+  const getProduct = () => {
     let productList = [];
-    axios
-      .get(`${url}products/getProduct/${id}`)
-      .then(res => {
-        if (res.data.success == true) {
-          productList.push(res.data.product);
-          setCartItem(productList);
-          countTotal(productList);
-        }
-      })
-      .catch(error => {
-        console.log('Fetch api error');
-      });
+    props.cartItem.forEach(item => {
+      axios
+        .get(`${url}products/getProduct/${item.product}`)
+        .then(res => {
+          if (res.data.success == true) {
+            productList.push(res.data.product);
+            setCartItem(productList);
+            countTotal(productList);
+          }
+        })
+        .catch(error => {
+          console.log('Fetch api error');
+        });
+    });
   };
 
   return (

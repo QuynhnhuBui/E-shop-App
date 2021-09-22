@@ -1,7 +1,3 @@
-import {NoItem} from '../message/custom';
-// import {Colors, Images, Sizes, Strings} from '../../res';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {elevationShadowStyle} from '../message/custom/Functions';
 import React, {Component, useState, useEffect, useRef} from 'react';
 import {
   View,
@@ -33,7 +29,7 @@ const SwipeItem = props => {
     );
   };
   return (
-    <View style={{flex: 1,}}>
+    <View style={{flex: 1}}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={props.data}
@@ -43,7 +39,9 @@ const SwipeItem = props => {
         renderItem={renderItem}
         onScroll={() => setIndexScroll('')}
         removeClippedSubviews={true}
-       onPress={(item)=>{props.onPress(item)}}
+        onPress={item => {
+          props.onPress(item);
+        }}
       />
     </View>
   );
@@ -51,20 +49,19 @@ const SwipeItem = props => {
 
 export const ItemList = props => {
   const scrollRef = useRef();
-  const index = props.index; 
+  const index = props.index;
   const setIndexScroll = props.setIndexScroll;
   const item = props.item;
-  const indexScroll = props.indexScroll; 
+  const indexScroll = props.indexScroll;
 
   useEffect(() => {
     if (index !== indexScroll) {
-        scrollRef.current.scrollTo({  y: 0, animated: true });
+      scrollRef.current.scrollTo({y: 0, animated: true});
     }
   }, [indexScroll]);
 
   return (
     <View>
-
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -74,12 +71,11 @@ export const ItemList = props => {
         snapToAlignment={'center'}
         pagingEnabled
         ref={scrollRef}
-        onScrollBeginDrag={() => setIndexScroll(index)}
-        >
+        onScrollBeginDrag={() => setIndexScroll(index)}>
         <TouchableOpacity
           onPress={() => {
             setIndexScroll('');
-            props.onPress(item)
+            props.onPress(item);
           }}
           style={{
             flex: 1,
@@ -97,58 +93,52 @@ export const ItemList = props => {
             shadowRadius: 0.8 * Sizes.s5,
             elevation: Sizes.s7,
           }}>
-              <View style={{flexDirection:'row', }}>
-              <Image
-          style={styles.image}
-          resizeMode="contain"
-          source={{uri: item.image ? item.image : null}}
-          // source={{uri: 'http://nhu-eshop-server.herokuapp.com/public/images/iphone11-green.jpg-1630351810858.jpeg'}}
-        />
-        <View>
-          <Text
-              style={{
-                fontSize: Sizes.h30,
-                fontWeight: '500',
-              }}>
-              {`Name: ${item.name}`}
-            </Text>
-            <Text
-              style={{
-                flex: 1,
-                fontSize: Sizes.h30,
-                fontWeight: '500',
-                fontStyle: 'italic',
-              }}>
-              {`Brand: ${item.brand}`}
-            </Text>
-            <Text
-              style={{
-              
-                fontSize: Sizes.h30,
-                fontWeight: '500',
-              }}>
-              {`Price: ${item.price}`}
-            </Text>
-            <Text
-              style={{
-              
-                fontSize: Sizes.h30,
-                fontWeight: '500',
-              }}>
-              {`Category: ${item.category.name}`}
-            </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Image
+              style={styles.image}
+              resizeMode="contain"
+              source={{uri: item.image ? item.image : null}}
+              // source={{uri: 'http://nhu-eshop-server.herokuapp.com/public/images/iphone11-green.jpg-1630351810858.jpeg'}}
+            />
+            <View>
+              <Text
+                style={{
+                  fontSize: Sizes.h30,
+                  fontWeight: '500',
+                }}>
+                {`Name: ${item.name}`}
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  fontSize: Sizes.h30,
+                  fontWeight: '500',
+                  fontStyle: 'italic',
+                }}>
+                {`Brand: ${item.brand}`}
+              </Text>
+              <Text
+                style={{
+                  fontSize: Sizes.h30,
+                  fontWeight: '500',
+                }}>
+                {`Price: ${item.price}$`}
+              </Text>
+              <Text
+                style={{
+                  fontSize: Sizes.h30,
+                  fontWeight: '500',
+                }}>
+                {`Category: ${item.category.name}`}
+              </Text>
+            </View>
           </View>
-              </View>
-          
-            
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.leftAction}
           onPress={() => {
             setIndexScroll('');
-           
-            
           }}>
           <Text>Edit</Text>
         </TouchableOpacity>
@@ -156,7 +146,7 @@ export const ItemList = props => {
           style={styles.leftAction}
           onPress={() => {
             setIndexScroll('');
-            props.onPressDel(item.id)
+            props.onPressDel(item.id);
           }}>
           <Text>Delete</Text>
         </TouchableOpacity>

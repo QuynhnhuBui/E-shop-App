@@ -2,12 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
-  Image,
   FlatList,
   TouchableOpacity,
-  ScrollView,
   Dimensions,
-  Platform,
   StyleSheet,
   Alert,
   Modal,
@@ -15,7 +12,6 @@ import {
   Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import Toast from 'react-native-simple-toast';
 import axios from 'axios';
 import url from '../../common/baseUrl';
@@ -30,15 +26,14 @@ const listItem = [
 const Item = props => {
   const [showSelect, setShowSelect] = useState(false);
   const [selectedItem, setSelected] = useState();
-  const [id, setId] = useState()
+  const [id, setId] = useState();
   const {item} = props;
 
-
-  const updateStatus = (item,id) => {
+  const updateStatus = (item, id) => {
     let body = {
       status: item,
     };
-    console.log(body)
+    console.log(body);
     axios
       .put(`${url}orders/updateStatus/${id}`, body, {
         headers: {
@@ -47,9 +42,9 @@ const Item = props => {
       })
       .then(res => {
         if (res.data.success == true) {
-            console.log(res.data)
+          console.log(res.data);
           Toast.showWithGravity('Update status success', Toast.LONG, Toast.TOP);
-          props.navigation.navigate('product')
+          props.navigation.navigate('product');
         }
       })
       .catch(error => {
@@ -71,7 +66,7 @@ const Item = props => {
           style={styles.button}
           onPress={() => {
             setShowSelect(true);
-            setId(item.id)
+            setId(item.id);
           }}>
           <Text style={{color: '#fff', fontWeight: '700'}}>Update</Text>
         </TouchableOpacity>
@@ -86,27 +81,11 @@ const Item = props => {
         <TouchableWithoutFeedback
           onPress={() => {
             setShowSelect(false);
-           
           }}>
           <View style={styles.modal}>
             <TouchableWithoutFeedback>
-              <Animated.View
-                disabled={true}
-                style={{
-                  width: '100%',
-                  backgroundColor: '#ffffff',
-                  alignSelf: 'center',
-                  borderRadius: 15,
-                  height: Dimensions.get('window').height * 0.5,
-                }}>
-                <View
-                  style={{
-                    borderBottomWidth: 0.5,
-                    width: Dimensions.get('window').width,
-                    justifyContent: 'center',
-                    borderColor: '#EFEFEF',
-                    flexDirection: 'row',
-                  }}>
+              <Animated.View disabled={true} style={styles.animated_view}>
+                <View style={styles.title_view}>
                   <View>
                     <Text style={styles.title}>{'Select status'}</Text>
                   </View>
@@ -119,15 +98,7 @@ const Item = props => {
                   }}
                   renderItem={(item, index) => {
                     return (
-                      <View
-                        style={{
-                          borderBottomWidth: 0.5,
-                          width: Dimensions.get('window').width * 0.9,
-                          marginHorizontal: 10,
-                          alignItem: 'center',
-                          justifyContent: 'center',
-                          borderColor: '#EFEFEF',
-                        }}>
+                      <View style={styles.update_button}>
                         <TouchableOpacity
                           style={{
                             flexDirection: 'row',
@@ -135,9 +106,9 @@ const Item = props => {
                           }}
                           onPress={() => {
                             setSelected(item.item.name);
-                            console.log(item.item.name)
+                            console.log(item.item.name);
                             setShowSelect(false);
-                            updateStatus(item.item.name,id)
+                            updateStatus(item.item.name, id);
                           }}>
                           <Text
                             style={{
@@ -254,6 +225,28 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#222222',
     fontWeight: 'bold',
+  },
+  animated_view: {
+    width: '100%',
+    backgroundColor: '#ffffff',
+    alignSelf: 'center',
+    borderRadius: 15,
+    height: Dimensions.get('window').height * 0.5,
+  },
+  title_view: {
+    borderBottomWidth: 0.5,
+    width: Dimensions.get('window').width,
+    justifyContent: 'center',
+    borderColor: '#EFEFEF',
+    flexDirection: 'row',
+  },
+  update_button: {
+    borderBottomWidth: 0.5,
+    width: Dimensions.get('window').width * 0.9,
+    marginHorizontal: 10,
+    alignItem: 'center',
+    justifyContent: 'center',
+    borderColor: '#EFEFEF',
   },
 });
 

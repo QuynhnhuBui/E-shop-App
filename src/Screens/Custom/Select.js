@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import {
   View,
   Text,
@@ -8,49 +13,47 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
-  Animated
-} from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import { Sizes } from '@dungdang/react-native-basic'
+  Animated,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import {Sizes} from '@dungdang/react-native-basic';
 const Select = forwardRef((props, ref) => {
-  let [showSelect, setShowSelect] = useState(false)
+  let [showSelect, setShowSelect] = useState(false);
   let [selectedItem, setSelectedItem] = useState(
-    (props.defaultValue !== undefined) ? props.defaultValue : undefined
+    props.defaultValue !== undefined ? props.defaultValue : undefined,
   );
-  let [error, setError] = useState('')
+  let [error, setError] = useState('');
 
   useImperativeHandle(ref, () => ({
     error: (key, content) => {
       if (key === props.id) {
-        setError(content)
-        return false
+        setError(content);
+        return false;
       }
     },
-    clearError: (key) => {
+    clearError: key => {
       if (key === props.id) {
-        setError('')
+        setError('');
       }
-    }
-  }))
+    },
+  }));
 
-  const { listItem } = props
+  const {listItem} = props;
   _animatedSlideUp = new Animated.Value(showSelect ? 0 : 1);
   useEffect(() => {
-    let value = 0
+    let value = 0;
     if (showSelect) {
-      value = 1
+      value = 1;
     }
 
     Animated.timing(_animatedSlideUp, {
       toValue: value,
       duration: 300,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
-  }, [showSelect])
+  }, [showSelect]);
 
-
-  const renderItem = ({ item, index }) => {
-
+  const renderItem = ({item, index}) => {
     return (
       <View
         style={{
@@ -64,19 +67,19 @@ const Select = forwardRef((props, ref) => {
         <TouchableOpacity
           style={{
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
           onPress={() => {
             Animated.timing(_animatedSlideUp, {
               toValue: 0,
               duration: 300,
-              useNativeDriver: false
+              useNativeDriver: false,
             }).start();
             setTimeout(() => {
-              setSelectedItem(item)
-              setShowSelect(false)
-              props.onChooseItem(item)
-            }, 300)
+              setSelectedItem(item);
+              setShowSelect(false);
+              props.onChooseItem(item);
+            }, 300);
           }}>
           <Text
             style={{
@@ -86,31 +89,29 @@ const Select = forwardRef((props, ref) => {
             }}>
             {item.name !== undefined ? item.name : item}
           </Text>
-          <View style={{ flex: 1 }}></View>
-          {
-            selectedItem === item &&
+          <View style={{flex: 1}}></View>
+          {selectedItem === item && (
             <Icon
               solid
               style={{
-                paddingHorizontal: Sizes.s10
+                paddingHorizontal: Sizes.s10,
               }}
               size={Sizes.s35}
-              color='#007AFF'
-              name='check-circle' />
-          }
-
+              color="#007AFF"
+              name="check-circle"
+            />
+          )}
         </TouchableOpacity>
       </View>
     );
   };
 
-
-  let borderColor = '#EFEFEF'
+  let borderColor = '#EFEFEF';
   if (showSelect) {
-    borderColor = '#007AFF'
+    borderColor = '#007AFF';
   }
   if (error !== '') {
-    borderColor = 'red'
+    borderColor = 'red';
   }
   return (
     <View style={[styles.container, props.style]}>
@@ -120,66 +121,73 @@ const Select = forwardRef((props, ref) => {
           borderBottomWidth: Sizes.s2,
           borderRadius: Sizes.s10,
           flexDirection: 'row',
-          backgroundColor:'#fff',
+          backgroundColor: '#fff',
         }}
         onPress={() => {
-          props.onFocus(selectedItem)
-          setShowSelect(!showSelect)
-        }}
-      >
-        <Text style={{
-          paddingVertical: Sizes.s30,
-          paddingRight: Sizes.s50,
-          paddingLeft: Sizes.s30,
-          color: selectedItem === undefined ? '#8A8A8E' : '#222222',
-          fontSize: props.size,
+          props.onFocus(selectedItem);
+          setShowSelect(!showSelect);
         }}>
+        <Text
+          style={{
+            paddingVertical: Sizes.s30,
+            paddingRight: Sizes.s50,
+            paddingLeft: Sizes.s30,
+            color: selectedItem === undefined ? '#8A8A8E' : '#222222',
+            fontSize: props.size,
+          }}>
           {selectedItem !== undefined ? selectedItem.name : props.placeholder}
         </Text>
         <Icon
-          color='#989898'
+          color="#989898"
           size={Sizes.s30}
-          name='chevron-down'
+          name="chevron-down"
           style={{
             alignSelf: 'center',
             right: 5,
-            position: 'absolute'
-          }} />
+            position: 'absolute',
+          }}
+        />
       </TouchableOpacity>
-     
-      <Modal animationType='none' transparent={true} visible={showSelect} onRequestClose={() => { setShowSelect(false) }}>
+
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={showSelect}
+        onRequestClose={() => {
+          setShowSelect(false);
+        }}>
         <TouchableWithoutFeedback
           onPress={() => {
             Animated.timing(_animatedSlideUp, {
               toValue: 0,
               duration: 300,
-              useNativeDriver: false
+              useNativeDriver: false,
             }).start();
             setTimeout(() => {
-              setShowSelect(false)
-              props.onBlur(selectedItem)
-            }, 300)
-          }}
-        >
+              setShowSelect(false);
+              props.onBlur(selectedItem);
+            }, 300);
+          }}>
           <View
             style={{
               backgroundColor: '#00000036',
               flex: 1,
               width: '100%',
               justifyContent: 'flex-end',
-              alignItem: 'center',
+              alignItems: 'center',
             }}>
             <TouchableWithoutFeedback>
-
               <Animated.View
                 disabled={true}
                 style={{
-                  transform: [{
-                    translateY: _animatedSlideUp.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1000, 0],
-                    })
-                  }],
+                  transform: [
+                    {
+                      translateY: _animatedSlideUp.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [1000, 0],
+                      }),
+                    },
+                  ],
                   width: '100%',
                   backgroundColor: '#ffffff',
                   alignSelf: 'center',
@@ -192,7 +200,7 @@ const Select = forwardRef((props, ref) => {
                     width: Dimensions.get('window').width,
                     justifyContent: 'center',
                     borderColor: '#EFEFEF',
-                    flexDirection: 'row'
+                    flexDirection: 'row',
                   }}>
                   <View>
                     <Text
@@ -201,7 +209,7 @@ const Select = forwardRef((props, ref) => {
                         paddingVertical: 15,
                         alignSelf: 'center',
                         color: '#222222',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
                       }}>
                       {props.placeholder}
                     </Text>
@@ -211,16 +219,18 @@ const Select = forwardRef((props, ref) => {
                       justifyContent: 'center',
                       position: 'absolute',
                       right: 10,
-                      height: '100%'
+                      height: '100%',
                     }}
-                    onPress={() => { setShowSelect(!showSelect) }}
-                  >
-                  </TouchableOpacity>
+                    onPress={() => {
+                      setShowSelect(!showSelect);
+                    }}></TouchableOpacity>
                 </View>
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={listItem}
-                  keyExtractor={(item, index) => { index.toString() }}
+                  keyExtractor={(item, index) => {
+                    index.toString();
+                  }}
                   renderItem={(item, index) => renderItem(item, index)}
                   style={{
                     width: '100%',
@@ -234,27 +244,22 @@ const Select = forwardRef((props, ref) => {
                 />
               </Animated.View>
             </TouchableWithoutFeedback>
-
           </View>
         </TouchableWithoutFeedback>
-
       </Modal>
     </View>
-
-  )
-})
-export default Select
+  );
+});
+export default Select;
 
 Select.defaultProps = {
   placeholder: 'Select an item',
   type: 'normal',
   size: 18,
-  onChooseItem: (item) => { },
-  onFocus: () => { },
-  onBlur: () => { }
-}
-
-
+  onChooseItem: item => {},
+  onFocus: () => {},
+  onBlur: () => {},
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -265,7 +270,6 @@ const styles = StyleSheet.create({
     height: '40%',
     alignSelf: 'center',
     right: 5,
-    position: 'absolute'
-  }
-})
-
+    position: 'absolute',
+  },
+});

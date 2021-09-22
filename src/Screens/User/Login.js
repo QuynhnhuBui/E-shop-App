@@ -10,43 +10,33 @@ import {
 } from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import jwt_decode from "jwt-decode"
-import url from "../../common/baseUrl"
-import Toast from 'react-native-simple-toast'
-import {loginUser} from '../../redux/action/loginActions'
-import AuthGlobal from '../../redux/store/authGlobal'
+
+import {loginUser} from '../../redux/action/loginActions';
+import AuthGlobal from '../../redux/store/authGlobal';
 const Login = props => {
-    const context = useContext(AuthGlobal)
+  const context = useContext(AuthGlobal);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
   useEffect(() => {
-      if(context.stateUserData.isAuthenticated){
-          navigation.replace('profile')
-      } 
-  }
-  , [context.stateUserData.isAuthenticated]);
+    if (context.stateUserData.isAuthenticated) {
+      navigation.replace('profile');
+    }
+  }, [context.stateUserData.isAuthenticated]);
 
   const onLogin = () => {
-      
     if (email == '' || password == '') {
-        Alert.alert(
-                "Alert",
-                "Please fill in your email and password",
-                [
-                  {
-                    text: "Cancel",
-                   
-                  },
-                ],)
+      Alert.alert('Alert', 'Please fill in your email and password', [
+        {
+          text: 'Cancel',
+        },
+      ]);
     } else {
       const user = {
-        email:email,
-        password:password
+        email: email,
+        password: password,
       };
-      loginUser(user, context.dispatch)
-
+      loginUser(user, context.dispatch);
     }
   };
 
@@ -100,7 +90,11 @@ const Login = props => {
             secureTextEntry={true}
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={() => {onLogin()}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            onLogin();
+          }}>
           <Text style={{color: '#fff', fontWeight: '700'}}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity

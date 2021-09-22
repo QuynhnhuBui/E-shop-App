@@ -1,11 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
-  FlatList,
   TouchableOpacity,
-  Image,
   StyleSheet,
-  ActivityIndicator,
   Text,
   TextInput,
   TouchableWithoutFeedback,
@@ -18,12 +15,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import url from '../../common/baseUrl';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import Toast from 'react-native-simple-toast'
+import Toast from 'react-native-simple-toast';
 
 const Categories = props => {
   const [token, setToken] = useState('');
   const [categories, setList] = useState([]);
-  const [text, setText] = useState('')
+  const [text, setText] = useState('');
   useFocusEffect(
     useCallback(() => {
       AsyncStorage.getItem('token')
@@ -47,37 +44,35 @@ const Categories = props => {
         console.log('Fetch api error');
       });
   };
-  const addCategory = () =>{
-
-    if(text !== ""){
-      let body ={
-        name: text}
+  const addCategory = () => {
+    if (text !== '') {
+      let body = {
+        name: text,
+      };
       axios
-      .post(`${url}categories/addCategory`,body,{
-        headers: { 
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(res => {
-        if (res.data.success == true) {
-          Toast.showWithGravity(
-            'Add category success',
-            Toast.LONG,
-            Toast.TOP,
-          )
-          Keyboard.dismiss()
-          setText('')
-          getCategoryList()
-        }
-      })
-      .catch(error => {
-        console.log('Fetch api error');
-      });
+        .post(`${url}categories/addCategory`, body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(res => {
+          if (res.data.success == true) {
+            Toast.showWithGravity(
+              'Add category success',
+              Toast.LONG,
+              Toast.TOP,
+            );
+            Keyboard.dismiss();
+            setText('');
+            getCategoryList();
+          }
+        })
+        .catch(error => {
+          console.log('Fetch api error');
+        });
     }
-   
-  }
+  };
 
-  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -91,8 +86,6 @@ const Categories = props => {
                 <View style={styles.itemView}>
                   <View style={styles.container}>
                     <Text>{category.name}</Text>
-
-                    
                   </View>
                 </View>
               );
@@ -108,15 +101,15 @@ const Categories = props => {
               width: '60%',
               marginLeft: Sizes.s10,
             }}
-            onChangeText={(text)=>{
-              setText(text.trim())
+            onChangeText={text => {
+              setText(text.trim());
             }}
             value={text}
           />
           <TouchableOpacity
-          onPress={()=>{
-            addCategory()
-          }}
+            onPress={() => {
+              addCategory();
+            }}
             style={{
               backgroundColor: '#ff6600',
               paddingVertical: Sizes.s20,

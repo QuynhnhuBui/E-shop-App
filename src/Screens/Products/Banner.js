@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Dimensions,
-  Image,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import {View, Dimensions, Image, StyleSheet, ScrollView} from 'react-native';
 import {Sizes} from '@dungdang/react-native-basic';
 import Swiper from 'react-native-swiper';
 
