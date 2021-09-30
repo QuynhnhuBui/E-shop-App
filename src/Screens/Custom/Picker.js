@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import {
   View,
   Text,
@@ -8,75 +13,73 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
-  Animated
-} from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import { Sizes } from '@dungdang/react-native-basic'
+  Animated,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import {Sizes} from '@dungdang/react-native-basic';
 const Picker = forwardRef((props, ref) => {
-  let [showSelect, setShowSelect] = useState(false)
+  let [showSelect, setShowSelect] = useState(false);
   let [selectedItem, setSelectedItem] = useState(
-    (props.defaultValue !== undefined) ? props.defaultValue : undefined
+    props.defaultValue !== undefined ? props.defaultValue : undefined,
   );
-  let [error, setError] = useState('')
+  let [error, setError] = useState('');
 
   useImperativeHandle(ref, () => ({
     error: (key, content) => {
       if (key === props.id) {
-        setError(content)
-        return false
+        setError(content);
+        return false;
       }
     },
-    clearError: (key) => {
+    clearError: key => {
       if (key === props.id) {
-        setError('')
+        setError('');
       }
-    }
-  }))
+    },
+  }));
 
-  const { listItem } = props
+  const {listItem} = props;
   _animatedSlideUp = new Animated.Value(showSelect ? 0 : 1);
   useEffect(() => {
-    let value = 0
+    let value = 0;
     if (showSelect) {
-      value = 1
+      value = 1;
     }
 
     Animated.timing(_animatedSlideUp, {
       toValue: value,
       duration: 300,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
-  }, [showSelect])
+  }, [showSelect]);
 
-
-  const renderItem = ({ item, index }) => {
-
+  const renderItem = ({item, index}) => {
     return (
       <View
         style={{
           borderBottomWidth: 0.5,
           width: Dimensions.get('window').width * 0.9,
           marginHorizontal: 10,
-          alignItem: 'center',
+          alignItems: 'center',
           justifyContent: 'center',
           borderColor: '#EFEFEF',
         }}>
         <TouchableOpacity
           style={{
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
           onPress={() => {
             Animated.timing(_animatedSlideUp, {
               toValue: 0,
               duration: 300,
-              useNativeDriver: false
+              useNativeDriver: false,
             }).start();
             setTimeout(() => {
-              setSelectedItem(item)
-              setShowSelect(false)
-              props.onChooseItem(item)
-            }, 300)
+              setSelectedItem(item);
+              setShowSelect(false);
+              props.onChooseItem(item);
+            }, 300);
           }}>
           <Text
             style={{
@@ -86,101 +89,99 @@ const Picker = forwardRef((props, ref) => {
             }}>
             {item.name !== undefined ? item.name : item}
           </Text>
-          <View style={{ flex: 1 }}></View>
-          {
-            selectedItem === item &&
+          <View style={{flex: 1}}></View>
+          {selectedItem === item && (
             <Icon
               solid
               style={{
-                paddingHorizontal: Sizes.s10
+                paddingHorizontal: Sizes.s10,
               }}
               size={Sizes.s35}
-              color='#007AFF'
-              name='check-circle' />
-          }
-
+              color="#007AFF"
+              name="check-circle"
+            />
+          )}
         </TouchableOpacity>
       </View>
     );
   };
 
-
-  let borderColor = '#EFEFEF'
+  let borderColor = '#EFEFEF';
   if (showSelect) {
-    borderColor = '#007AFF'
+    borderColor = '#007AFF';
   }
   if (error !== '') {
-    borderColor = 'red'
+    borderColor = 'red';
   }
   return (
     <View style={[styles.container, props.style]}>
       <TouchableOpacity
         style={{...styles.button, borderColor: borderColor}}
         onPress={() => {
-          props.onFocus(selectedItem)
-          setShowSelect(!showSelect)
-        }}
-      >
-        <Text style={{
-         
-          color: selectedItem === undefined ? '#8A8A8E' : '#222222',
-          fontSize: props.size,
-          ...styles.placeHolder
+          props.onFocus(selectedItem);
+          setShowSelect(!showSelect);
         }}>
+        <Text
+          style={{
+            color: selectedItem === undefined ? '#8A8A8E' : '#222222',
+            fontSize: props.size,
+            ...styles.placeHolder,
+          }}>
           {selectedItem !== undefined ? selectedItem.name : props.placeholder}
         </Text>
         <Icon
-          color='#989898'
+          color="#989898"
           size={Sizes.s30}
-          name='chevron-down'
-          style={styles.icon} />
+          name="chevron-down"
+          style={styles.icon}
+        />
       </TouchableOpacity>
       {error !== '' && (
         <View>
-          <Text
-            style={styles.errorText}>
-            {error}
-          </Text>
+          <Text style={styles.errorText}>{error}</Text>
         </View>
       )}
-      <Modal animationType='none' transparent={true} visible={showSelect} onRequestClose={() => { setShowSelect(false) }}>
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={showSelect}
+        onRequestClose={() => {
+          setShowSelect(false);
+        }}>
         <TouchableWithoutFeedback
           onPress={() => {
             Animated.timing(_animatedSlideUp, {
               toValue: 0,
               duration: 300,
-              useNativeDriver: false
+              useNativeDriver: false,
             }).start();
             setTimeout(() => {
-              setShowSelect(false)
-              props.onBlur(selectedItem)
-            }, 300)
-          }}
-        >
-          <View
-            style={styles.modal}>
+              setShowSelect(false);
+              props.onBlur(selectedItem);
+            }, 300);
+          }}>
+          <View style={styles.modal}>
             <TouchableWithoutFeedback>
-
               <Animated.View
                 disabled={true}
                 style={{
-                  transform: [{
-                    translateY: _animatedSlideUp.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1000, 0],
-                    })
-                  }],
+                  transform: [
+                    {
+                      translateY: _animatedSlideUp.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [1000, 0],
+                      }),
+                    },
+                  ],
                   width: '100%',
                   backgroundColor: '#ffffff',
                   alignSelf: 'center',
                   borderRadius: 15,
                   height: Dimensions.get('window').height * 0.5,
                 }}>
-                <View
-                  style={styles.modalHeader}>
+                <View style={styles.modalHeader}>
                   <View>
-                    <Text
-                      style={styles.modalPlaceholder}>
+                    <Text style={styles.modalPlaceholder}>
                       {props.placeholder}
                     </Text>
                   </View>
@@ -189,16 +190,18 @@ const Picker = forwardRef((props, ref) => {
                       justifyContent: 'center',
                       position: 'absolute',
                       right: 10,
-                      height: '100%'
+                      height: '100%',
                     }}
-                    onPress={() => { setShowSelect(!showSelect) }}
-                  >
-                  </TouchableOpacity>
+                    onPress={() => {
+                      setShowSelect(!showSelect);
+                    }}></TouchableOpacity>
                 </View>
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={listItem}
-                  keyExtractor={(item, index) => { index.toString() }}
+                  keyExtractor={(item, index) => {
+                    index.toString();
+                  }}
                   renderItem={(item, index) => renderItem(item, index)}
                   style={styles.flatList}
                   contentContainerStyle={{
@@ -207,27 +210,22 @@ const Picker = forwardRef((props, ref) => {
                 />
               </Animated.View>
             </TouchableWithoutFeedback>
-
           </View>
         </TouchableWithoutFeedback>
-
       </Modal>
     </View>
-
-  )
-})
-export default Picker
+  );
+});
+export default Picker;
 
 Picker.defaultProps = {
   placeholder: 'Select an item',
   type: 'normal',
   size: 18,
-  onChooseItem: (item) => { },
-  onFocus: () => { },
-  onBlur: () => { }
-}
-
-
+  onChooseItem: item => {},
+  onFocus: () => {},
+  onBlur: () => {},
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -236,14 +234,14 @@ const styles = StyleSheet.create({
   icon: {
     alignSelf: 'center',
     right: 5,
-    position: 'absolute'
+    position: 'absolute',
   },
   button: {
     borderWidth: 1,
     borderRadius: Sizes.s10,
     flexDirection: 'row',
-    backgroundColor:'#fff',
-    marginTop: Sizes.s20
+    backgroundColor: '#fff',
+    marginTop: Sizes.s20,
   },
   placeHolder: {
     paddingVertical: Sizes.s20,
@@ -261,7 +259,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',
-  }, 
+  },
   flatList: {
     width: '100%',
     alignSelf: 'center',
@@ -272,14 +270,13 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignSelf: 'center',
     color: '#222222',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   modalHeader: {
     borderBottomWidth: 0.5,
     width: Dimensions.get('window').width,
     justifyContent: 'center',
     borderColor: '#EFEFEF',
-    flexDirection: 'row'
-  }
-})
-
+    flexDirection: 'row',
+  },
+});

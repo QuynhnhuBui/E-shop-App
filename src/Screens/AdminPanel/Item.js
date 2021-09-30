@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     width: Dimensions.get('window').width * 0.9,
     marginHorizontal: 10,
-    alignItem: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     borderColor: '#EFEFEF',
   },
